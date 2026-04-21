@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#5EBC82">
 <meta name="mobile-web-app-capable" content="yes">
 <title>La Cuponera — Wallet → Bizum Flow</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -49,6 +50,23 @@ body{font-family:'Montserrat',system-ui,-apple-system,sans-serif;background:#000
 .status-bar .icons svg{width:16px;height:16px}
 /* dynamic island */
 .dynamic-island{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:126px;height:36px;background:#000;border-radius:20px;z-index:1001}
+
+/* ========== MOBILE: remove device frame ========== */
+@media screen and (max-width:500px){
+  body{background:#fff}
+  .device-frame{width:100%;height:100vh;height:100dvh;margin:0;border-radius:0;box-shadow:none;border:none}
+  .device-frame::before{display:none}
+  .dynamic-island{display:none}
+  .status-bar{display:none}
+  .home-content{padding-top:env(safe-area-inset-top,0px)}
+  .profile-content{padding-top:env(safe-area-inset-top,0px)}
+  .profile-content > div:first-child{height:env(safe-area-inset-top,0px)}
+  .common-header{padding-top:calc(env(safe-area-inset-top,0px) + 8px)}
+  .wallet-screen-content{padding-top:calc(env(safe-area-inset-top,0px) + 60px) !important}
+  .tab-bar{padding-bottom:env(safe-area-inset-bottom,0px);height:calc(83px + env(safe-area-inset-bottom,0px))}
+  .wallet-bottom-btn{bottom:calc(83px + env(safe-area-inset-bottom,0px))}
+  .success-bottom{bottom:calc(30px + env(safe-area-inset-bottom,0px))}
+}
 
 /* ========== SCREENS CONTAINER ========== */
 .screens{position:absolute;top:0;left:0;width:100%;height:100%}
