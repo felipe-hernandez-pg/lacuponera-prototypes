@@ -37,15 +37,16 @@ body{font-family:'Montserrat',system-ui,-apple-system,sans-serif;background:#000
 .status-bar .icons svg{width:16px;height:16px}
 .dynamic-island{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:126px;height:36px;background:#000;border-radius:20px;z-index:1001}
 @media screen and (max-width:500px),(hover:none) and (pointer:coarse){
+  html,body{height:100%!important;overflow:hidden!important}
   body{background:#fff!important}
-  .device-frame{width:100%!important;height:-webkit-fill-available!important;height:100dvh!important;margin:0!important;border-radius:0!important;box-shadow:none!important;border:none!important;top:0!important;left:0!important;right:0!important;bottom:0!important;position:fixed!important;overflow:visible!important}
+  .device-frame{width:100%!important;height:100%!important;margin:0!important;border-radius:0!important;box-shadow:none!important;border:none!important;position:fixed!important;top:0!important;left:0!important;right:0!important;bottom:0!important;overflow:hidden!important;display:flex!important;flex-direction:column!important}
   .dynamic-island{display:none!important}
   .status-bar{display:none!important}
   .home-hero{padding-top:calc(env(safe-area-inset-top,54px) + 12px)!important}
   .inner-header{padding-top:calc(env(safe-area-inset-top,54px) + 8px)!important}
-  .screens{overflow:visible!important}
-  .screen{overflow:visible!important}
-  .tab-bar{position:fixed!important;bottom:0!important;left:0!important;right:0!important;height:auto!important;padding-top:8px!important;padding-bottom:env(safe-area-inset-bottom,0)!important;z-index:9000!important}
+  .screens{position:relative!important;flex:1!important;overflow:hidden!important;width:100%!important;height:auto!important}
+  .screen{position:absolute!important;top:0!important;left:0!important;right:0!important;bottom:0!important;width:100%!important;height:100%!important}
+  .tab-bar{position:relative!important;flex-shrink:0!important;width:100%!important;height:auto!important;padding-top:8px!important;padding-bottom:env(safe-area-inset-bottom,0)!important;z-index:9000!important;bottom:auto!important}
   .modal-sheet{padding-bottom:calc(30px + env(safe-area-inset-bottom,0))}
 }
 .screens{position:absolute;top:0;left:0;width:100%;height:100%}
@@ -502,7 +503,7 @@ function uT(){const n=new Date();document.getElementById('sTime').textContent=n.
 // Fullscreen
 function launchFS(){const s=document.getElementById('fsSplash');const el=document.documentElement;if(el.requestFullscreen)el.requestFullscreen().catch(()=>{});else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();s.classList.add('hidden');setTimeout(()=>s.style.display='none',500)}
 // Version badge (tap 3x to show)
-var _vt=0;document.addEventListener('click',()=>{_vt++;if(_vt>=3){toast('v2.8');_vt=0}});
+var _vt=0;document.addEventListener('click',()=>{_vt++;if(_vt>=3){toast('v2.9');_vt=0}});
 // Service Worker
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').then(r=>{r.addEventListener('updatefound',()=>{const w=r.installing;w.addEventListener('statechange',()=>{if(w.state==='activated')location.reload()})})}).catch(()=>{})}
 </script>
