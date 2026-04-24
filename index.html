@@ -45,7 +45,8 @@ body{font-family:'Montserrat',system-ui,-apple-system,sans-serif;background:#000
   .home-hero{padding-top:calc(env(safe-area-inset-top,54px) + 12px)!important}
   .inner-header{padding-top:calc(env(safe-area-inset-top,54px) + 8px)!important}
   .screens{position:relative!important;flex:1!important;overflow:hidden!important;width:100%!important;height:auto!important}
-  .screen{position:absolute!important;top:0!important;left:0!important;right:0!important;bottom:0!important;width:100%!important;height:100%!important}
+  .screen{position:absolute!important;top:0!important;left:0!important;right:0!important;bottom:0!important;width:100%!important;height:100%!important;display:flex!important;flex-direction:column!important}
+  .scroll{flex:1!important;height:auto!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch!important}
   .tab-bar{position:relative!important;flex-shrink:0!important;width:100%!important;height:auto!important;padding-top:8px!important;padding-bottom:env(safe-area-inset-bottom,0)!important;z-index:9000!important;bottom:auto!important}
   .modal-sheet{padding-bottom:calc(30px + env(safe-area-inset-bottom,0))}
 }
@@ -503,7 +504,7 @@ function uT(){const n=new Date();document.getElementById('sTime').textContent=n.
 // Fullscreen
 function launchFS(){const s=document.getElementById('fsSplash');const el=document.documentElement;if(el.requestFullscreen)el.requestFullscreen().catch(()=>{});else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();s.classList.add('hidden');setTimeout(()=>s.style.display='none',500)}
 // Version badge (tap 3x to show)
-var _vt=0;document.addEventListener('click',()=>{_vt++;if(_vt>=3){toast('v2.9');_vt=0}});
+var _vt=0;document.addEventListener('click',()=>{_vt++;if(_vt>=3){toast('v3.0');_vt=0}});
 // Service Worker
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').then(r=>{r.addEventListener('updatefound',()=>{const w=r.installing;w.addEventListener('statechange',()=>{if(w.state==='activated')location.reload()})})}).catch(()=>{})}
 </script>
