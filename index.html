@@ -37,9 +37,9 @@ body{font-family:'Montserrat',system-ui,-apple-system,sans-serif;background:#000
 .status-bar .icons svg{width:16px;height:16px}
 .dynamic-island{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:126px;height:36px;background:#000;border-radius:20px;z-index:1001}
 @media screen and (max-width:500px),(hover:none) and (pointer:coarse){
-  html,body{height:100%!important}
-  body{background:#fff!important;overflow:hidden!important}
-  .device-frame{width:100%!important;height:var(--real-h,100%)!important;margin:0!important;border-radius:0!important;box-shadow:none!important;border:none!important;position:fixed!important;top:0!important;left:0!important;right:0!important;bottom:auto!important;overflow:clip!important}
+  html{height:100%!important;background:#fff!important}
+  body{height:100%!important;background:#fff!important;overflow:hidden!important}
+  .device-frame{width:100%!important;height:100%!important;margin:0!important;border-radius:0!important;box-shadow:none!important;border:none!important;position:fixed!important;top:0!important;left:0!important;right:0!important;bottom:0!important;overflow:clip!important}
   .dynamic-island{display:none!important}
   .status-bar{display:none!important}
   .home-hero{padding-top:calc(env(safe-area-inset-top,54px) + 12px)!important}
@@ -507,12 +507,10 @@ function launchFS(){const s=document.getElementById('fsSplash');const el=documen
 var _vt=0;document.addEventListener('click',()=>{_vt++;if(_vt>=3){_vt=0;
   const df=document.querySelector('.device-frame');const tb=document.querySelector('.screen.active .tab-bar');
   const dfR=df.getBoundingClientRect();const tbR=tb?tb.getBoundingClientRect():{bottom:0,top:0};
-  const gap=screen.height-tbR.bottom;
-  const info='v3.2 | win:'+window.innerHeight+' | scr:'+screen.height+' | frame:'+Math.round(dfR.height)+' | tabBot:'+Math.round(tbR.bottom)+' | gap:'+Math.round(gap);
+  const gap=window.innerHeight-tbR.bottom;
+  const info='v3.3 | win:'+window.innerHeight+' | scr:'+screen.height+' | tbBot:'+Math.round(tbR.bottom)+' | gap:'+Math.round(gap);
   toast(info);
 }});
-// Force full screen height on iOS standalone
-(function(){if(window.navigator.standalone||window.matchMedia('(display-mode:standalone)').matches||screen.height>window.innerHeight){document.documentElement.style.setProperty('--real-h',screen.height+'px')}})();
 // Service Worker
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').then(r=>{r.addEventListener('updatefound',()=>{const w=r.installing;w.addEventListener('statechange',()=>{if(w.state==='activated')location.reload()})})}).catch(()=>{})}
 </script>
