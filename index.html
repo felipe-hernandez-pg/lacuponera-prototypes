@@ -499,6 +499,8 @@ document.querySelectorAll('.retailer-chip').forEach(c=>c.addEventListener('click
 function uT(){const n=new Date();document.getElementById('sTime').textContent=n.getHours().toString().padStart(2,'0')+':'+n.getMinutes().toString().padStart(2,'0')}uT();setInterval(uT,30000);
 // Fullscreen
 function launchFS(){const s=document.getElementById('fsSplash');const el=document.documentElement;if(el.requestFullscreen)el.requestFullscreen().catch(()=>{});else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();s.classList.add('hidden');setTimeout(()=>s.style.display='none',500)}
+// Service Worker
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').then(r=>{r.addEventListener('updatefound',()=>{const w=r.installing;w.addEventListener('statechange',()=>{if(w.state==='activated')location.reload()})})}).catch(()=>{})}
 </script>
 </body>
 </html>
