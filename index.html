@@ -503,8 +503,14 @@ document.querySelectorAll('.retailer-chip').forEach(c=>c.addEventListener('click
 function uT(){const n=new Date();document.getElementById('sTime').textContent=n.getHours().toString().padStart(2,'0')+':'+n.getMinutes().toString().padStart(2,'0')}uT();setInterval(uT,30000);
 // Fullscreen
 function launchFS(){const s=document.getElementById('fsSplash');const el=document.documentElement;if(el.requestFullscreen)el.requestFullscreen().catch(()=>{});else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();s.classList.add('hidden');setTimeout(()=>s.style.display='none',500)}
-// Version badge (tap 3x to show)
-var _vt=0;document.addEventListener('click',()=>{_vt++;if(_vt>=3){toast('v3.1');_vt=0}});
+// Version badge (tap 3x to show debug info)
+var _vt=0;document.addEventListener('click',()=>{_vt++;if(_vt>=3){_vt=0;
+  const df=document.querySelector('.device-frame');const tb=document.querySelector('.screen.active .tab-bar');
+  const dfR=df.getBoundingClientRect();const tbR=tb?tb.getBoundingClientRect():{bottom:0,top:0};
+  const gap=window.innerHeight-tbR.bottom;
+  const info='v3.1 | win:'+window.innerHeight+'x'+window.innerWidth+' | scr:'+screen.height+' | frame:'+Math.round(dfR.height)+' | tabBot:'+Math.round(tbR.bottom)+' | gap:'+Math.round(gap)+'px';
+  toast(info);
+}});
 // Service Worker
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').then(r=>{r.addEventListener('updatefound',()=>{const w=r.installing;w.addEventListener('statechange',()=>{if(w.state==='activated')location.reload()})})}).catch(()=>{})}
 </script>
