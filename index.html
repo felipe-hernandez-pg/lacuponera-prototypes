@@ -11,892 +11,475 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-/* ========== RESET ========== */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{font-size:16px;-webkit-text-size-adjust:100%}
 body{font-family:'Montserrat',system-ui,-apple-system,sans-serif;background:#000;overflow:hidden;touch-action:manipulation}
 ::-webkit-scrollbar{display:none}
-
-/* ========== DESIGN TOKENS ========== */
 :root{
   --brand-01:#5EBC82;--brand-02:#2A43D8;--brand-03:#FFFFFF;
   --primary-600:#122B1C;--primary-400:#368253;--primary-200:#C3F8D8;--primary-100:#E4FCED;
-  --neutrals-600:#333333;--neutrals-500:#6B6B6B;--neutrals-400:#A8A8A8;--neutrals-300:#E6E6E6;--neutrals-200:#F2F2F2;--neutrals-100:#FAFAFA;
+  --neutrals-600:#333;--neutrals-500:#6B6B6B;--neutrals-400:#A8A8A8;--neutrals-300:#E6E6E6;--neutrals-200:#F2F2F2;--neutrals-100:#FAFAFA;
   --secondary-01:#FAD91E;--secondary-02:#FF552A;
   --error:#C40C3E;--success:#69930F;--warning:#E76A0E;
-  --heading:#122B1C;--subheading:#1B4129;
-  --primary:#48AD6F;--primaryAcc1:#5EBC82;--primaryAcc2:#C3F8D8;--primaryAcc3:#64BF87;
-  --fs-d1:48px;--fs-h1:40px;--fs-h2:32px;--fs-newH2:24px;--fs-h3:19px;--fs-h4:16px;--fs-body:14px;--fs-cta:16px;--fs-small:11px;--fs-xSmall:9px;
-  --lh-d1:48px;--lh-h1:40px;--lh-h2:32px;--lh-newH2:24px;--lh-h3:21px;--lh-h4:21px;--lh-body:21px;--lh-cta:16px;--lh-small:16px;--lh-xSmall:12px;
-  --tiny:5px;--tiny8:8px;--small:10px;--regular:15px;--big:25px;--large:30px;
-  --progress-bar:#2A43D8;--progress-bg:#E6E6E6;
-  /* Tier colors */
-  --tier-bronze:#CD7F32;--tier-bronze-bg:#FDF0E0;
-  --tier-silver:#A0A0A0;--tier-silver-bg:#F0F0F0;
-  --tier-gold:#FFD700;--tier-gold-bg:#FFF8DC;
-  --tier-diamond:#B9F2FF;--tier-diamond-bg:#E8F8FF;
+  --heading:#122B1C;--primary:#48AD6F;--primaryAcc1:#5EBC82;--primaryAcc2:#C3F8D8;--primaryAcc3:#64BF87;
+  --fs-h3:19px;--fs-h4:16px;--fs-body:14px;--fs-cta:16px;--fs-small:11px;--fs-xSmall:9px;--fs-newH2:24px;--fs-d1:48px;
+  --lh-body:21px;--lh-small:16px;
+  --tier-bronze:#CD7F32;--tier-bronze-bg:#FDF0E0;--tier-silver:#A0A0A0;--tier-silver-bg:#F0F0F0;
+  --tier-gold:#FFD700;--tier-gold-bg:#FFF8DC;--tier-diamond:#B9F2FF;--tier-diamond-bg:#E8F8FF;
 }
-
-/* ========== DEVICE FRAME ========== */
 .device-frame{position:relative;width:390px;height:844px;margin:20px auto;background:#fff;border-radius:44px;overflow:hidden;box-shadow:0 25px 80px rgba(0,0,0,.4),inset 0 0 0 3px #1a1a1a}
 .status-bar{position:absolute;top:0;left:0;right:0;height:54px;z-index:1000;display:flex;align-items:flex-end;justify-content:space-between;padding:0 30px 6px;pointer-events:none}
 .status-bar .time{font-weight:700;font-size:15px;color:var(--primary-600)}
 .status-bar .icons{display:flex;gap:6px;align-items:center}
 .status-bar .icons svg{width:16px;height:16px}
 .dynamic-island{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:126px;height:36px;background:#000;border-radius:20px;z-index:1001}
-
-/* ========== MOBILE OVERRIDE ========== */
 @media screen and (max-width:500px),(hover:none) and (pointer:coarse){
-  body{background:#fff !important}
+  body{background:#fff!important}
   .device-frame{width:100%!important;height:100vh!important;height:100dvh!important;margin:0!important;border-radius:0!important;box-shadow:none!important;border:none!important;inset:0!important;position:fixed!important}
   .dynamic-island{display:none!important}
   .status-bar{display:none!important}
-  .screen-content{padding-top:env(safe-area-inset-top,20px)!important}
-  .home-hero{padding-top:calc(env(safe-area-inset-top,20px) + 16px)!important}
-  .inner-header{padding-top:calc(env(safe-area-inset-top,20px) + 8px)!important}
-  .tab-bar{padding-bottom:env(safe-area-inset-bottom,0px);height:calc(83px + env(safe-area-inset-bottom,0px))}
+  .home-hero{padding-top:calc(env(safe-area-inset-top,20px)+16px)!important}
+  .inner-header{padding-top:calc(env(safe-area-inset-top,20px)+8px)!important}
+  .tab-bar{padding-bottom:env(safe-area-inset-bottom,0);height:calc(80px + env(safe-area-inset-bottom,0))}
+  .modal-sheet{padding-bottom:calc(30px + env(safe-area-inset-bottom,0))}
 }
-
-/* ========== SCREENS ========== */
 .screens{position:absolute;top:0;left:0;width:100%;height:100%}
-.screen{position:absolute;top:0;left:0;width:100%;height:100%;background:#fff;visibility:hidden;opacity:0;transition:opacity .3s ease,visibility .3s ease,transform .3s ease}
+.screen{position:absolute;top:0;left:0;width:100%;height:100%;background:#fff;visibility:hidden;opacity:0;transition:opacity .3s,visibility .3s,transform .3s}
 .screen.active{visibility:visible;opacity:1;transform:translateX(0)}
-.screen.slide-in{transform:translateX(100%)}
-.screen.slide-out-left{transform:translateX(-30%);opacity:.5}
-.screen.entering{visibility:visible;opacity:1;transform:translateX(0)}
-
-/* ========== TAB BAR ========== */
-.tab-bar{position:absolute;bottom:0;left:0;right:0;height:83px;background:#fff;border-top:1px solid var(--neutrals-200);display:flex;align-items:flex-start;padding-top:8px;z-index:100}
-.tab-bar-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;-webkit-user-select:none;user-select:none}
-.tab-bar-item svg{width:24px;height:24px}
-.tab-bar-item span{font-size:10px;font-weight:600;color:var(--neutrals-500);line-height:14px}
-.tab-bar-item.active svg path,.tab-bar-item.active svg circle,.tab-bar-item.active svg rect{fill:var(--brand-01);stroke:var(--brand-01)}
-.tab-bar-item.active span{color:var(--brand-01)}
-
-/* ========== INNER PAGE HEADER ========== */
-.inner-header{padding:54px 15px 12px;display:flex;align-items:center;gap:12px;background:#fff;position:relative;z-index:10}
-.inner-header .back-btn{width:40px;height:40px;background:var(--neutrals-200);border-radius:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
-.inner-header .back-btn:active{background:var(--neutrals-300)}
-.inner-header .back-btn svg{width:20px;height:20px}
-.inner-header .page-title{font-size:var(--fs-h4);font-weight:700;color:var(--primary-600)}
-
-/* ========== GRADIENT BUTTON ========== */
-.gradient-btn{width:100%;height:48px;border-radius:100px;border:none;cursor:pointer;background:linear-gradient(90deg,var(--primary) 0%,var(--primaryAcc3) 100%);color:#fff;font-family:'Montserrat',sans-serif;font-size:var(--fs-cta);font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 12px rgba(72,173,111,.25);transition:transform .1s}
-.gradient-btn:active{transform:scale(.97)}
-.gradient-btn.small{height:36px;font-size:13px;width:auto;padding:0 24px;border-radius:100px}
-
-/* ========== SECONDARY BUTTON ========== */
-.secondary-btn{height:48px;border-radius:100px;cursor:pointer;background:#fff;border:2px solid var(--primaryAcc1);color:var(--primary-600);font-family:'Montserrat',sans-serif;font-size:var(--fs-cta);font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 24px;transition:all .1s}
-.secondary-btn:active{background:var(--primary-100)}
-.secondary-btn.small{height:36px;font-size:13px;padding:0 20px}
-
-/* ========== PROGRESS BAR ========== */
-.progress-container{width:100%;background:var(--progress-bg);border-radius:5px;height:10px;overflow:hidden}
-.progress-fill{height:100%;border-radius:5px;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
-
-/* ========== HOME HERO ========== */
-.home-hero{padding:54px 0 0;background:linear-gradient(160deg,#2D5437 0%,#48AD6F 50%,#5EBC82 100%);position:relative;overflow:hidden}
-.home-hero::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:rgba(255,255,255,.06);border-radius:50%}
-.home-hero-inner{padding:28px 16px 20px;position:relative;z-index:1}
-.home-greeting{font-size:22px;font-weight:700;color:#fff;line-height:26px}
-.home-subtitle{font-size:var(--fs-body);color:rgba(255,255,255,.8);margin-top:4px}
-
-/* ========== TIER BADGE (home) ========== */
-.tier-badge-home{margin:14px 0 0;display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.15);border-radius:16px;padding:12px 14px;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-.tier-badge-home:active{background:rgba(255,255,255,.25)}
-.tier-badge-icon{width:44px;height:44px;border-radius:22px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:24px}
-.tier-badge-info{flex:1}
-.tier-badge-label{font-size:var(--fs-small);color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.5px;font-weight:600}
-.tier-badge-name{font-size:var(--fs-h4);font-weight:800;color:#fff}
-.tier-badge-arrow{color:rgba(255,255,255,.6);font-size:18px}
-
-/* ========== WALLET CARD (home) ========== */
-.wallet-card-home{margin:16px;background:#fff;border-radius:16px;padding:16px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
-.wallet-card-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.wallet-card-label{display:flex;align-items:center;gap:6px;font-size:var(--fs-body);font-weight:700;color:var(--primary-600)}
-.wallet-card-amount{font-size:var(--fs-newH2);font-weight:800;color:var(--primary-600)}
-.wallet-progress-text{font-size:var(--fs-small);font-weight:600;color:var(--neutrals-500);text-align:center;margin-top:8px}
-.wallet-progress-text .hl{color:var(--brand-02);font-weight:700}
-
-/* ========== HOME SECTIONS ========== */
-.home-scroll{height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:90px}
-.home-section{padding:0 16px;margin-bottom:16px}
-.home-section-title{font-size:var(--fs-h4);font-weight:700;color:var(--primary-600);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
-.home-section-title .see-all{font-size:var(--fs-small);font-weight:600;color:var(--brand-02);cursor:pointer}
-
-/* ========== OFFER CARDS ========== */
-.offers-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.offer-card{background:#fff;border:1px solid var(--neutrals-200);border-radius:12px;overflow:hidden;cursor:pointer;position:relative}
-.offer-card:active{border-color:var(--brand-01)}
-.offer-img{width:100%;aspect-ratio:1;background:var(--neutrals-100);display:flex;align-items:center;justify-content:center;overflow:hidden}
-.offer-img img{width:100%;height:100%;object-fit:contain;padding:8px}
-.offer-info{padding:8px 10px}
-.offer-brand{font-size:var(--fs-small);font-weight:700;color:var(--primary-600)}
-.offer-prize{font-size:var(--fs-small);font-weight:700;color:var(--primaryAcc1);margin-top:2px}
-.offer-tag{position:absolute;top:8px;right:8px;background:var(--secondary-01);padding:2px 8px;border-radius:10px;font-size:var(--fs-xSmall);font-weight:700;color:var(--primary-600)}
-.offer-tier-tag{position:absolute;top:8px;left:8px;padding:2px 8px;border-radius:10px;font-size:var(--fs-xSmall);font-weight:700;display:flex;align-items:center;gap:3px}
-
-/* ========== POINTS BANNER ========== */
-.points-banner{margin:0 16px 16px;padding:14px 16px;background:var(--primary-100);border:1px solid var(--primary-200);border-radius:14px;display:flex;align-items:center;gap:12px;cursor:pointer}
-.points-banner:active{background:var(--primaryAcc2)}
-.points-icon{width:40px;height:40px;border-radius:20px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:20px}
-.points-text{flex:1}
-.points-title{font-size:var(--fs-body);font-weight:700;color:var(--primary-600)}
-.points-sub{font-size:var(--fs-small);color:var(--neutrals-500);margin-top:2px}
-.points-arrow{font-size:16px;color:var(--neutrals-400)}
-
-/* ========== MI NIVEL PAGE ========== */
-.nivel-scroll{height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:90px}
-.nivel-hero{background:linear-gradient(135deg,var(--primaryAcc2),var(--brand-01));padding:24px 16px;position:relative;overflow:hidden}
-.nivel-hero::before{content:'⭐';position:absolute;right:-10px;top:-10px;font-size:100px;opacity:.1}
-.nivel-current-label{font-size:var(--fs-small);text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.8);font-weight:600}
-.nivel-current-name{font-size:28px;font-weight:900;color:#fff;margin-top:4px}
-.nivel-current-pts{font-size:var(--fs-body);color:rgba(255,255,255,.9);margin-top:6px}
-.nivel-progress{margin-top:14px}
-.nivel-progress .progress-container{background:rgba(255,255,255,.3);height:12px;border-radius:6px}
-.nivel-progress .progress-fill{background:#fff}
-.nivel-progress-labels{display:flex;justify-content:space-between;margin-top:6px;font-size:var(--fs-small);color:rgba(255,255,255,.8);font-weight:600}
-.nivel-section{padding:16px}
-.nivel-section-title{font-size:var(--fs-h4);font-weight:700;color:var(--primary-600);margin-bottom:12px}
-
-/* ========== TIER LIST ========== */
-.tier-list{background:#fff;border-radius:14px;border:1px solid var(--neutrals-200);overflow:hidden}
-.tier-item{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--neutrals-200);cursor:pointer;transition:background .15s}
-.tier-item:last-child{border-bottom:none}
-.tier-item:active{background:var(--neutrals-100)}
-.tier-item.current{background:var(--primary-100);border-left:4px solid var(--brand-01)}
-.tier-item.locked{opacity:.5}
-.tier-icon{width:44px;height:44px;border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
-.tier-info{flex:1}
-.tier-name{font-size:var(--fs-body);font-weight:700;color:var(--primary-600);display:flex;align-items:center;gap:6px}
-.tier-desc{font-size:var(--fs-small);color:var(--neutrals-500);margin-top:2px}
-.tier-badge{padding:2px 8px;border-radius:10px;font-size:var(--fs-xSmall);font-weight:700;background:var(--primary-100);color:var(--primary-400)}
-.tier-check{color:var(--brand-01)}
-.tier-arrow{color:var(--neutrals-400);font-size:14px}
-
-/* ========== BENEFITS PAGE ========== */
-.benefits-scroll{height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:90px}
-.benefit-tier-header{padding:20px 16px;text-align:center}
-.benefit-tier-icon{font-size:48px;margin-bottom:8px}
-.benefit-tier-name{font-size:var(--fs-newH2);font-weight:900;color:var(--primary-600)}
-.benefit-tier-range{font-size:var(--fs-body);color:var(--neutrals-500);margin-top:4px}
-.benefits-list{padding:0 16px}
-.benefit-item{display:flex;align-items:flex-start;gap:12px;padding:14px 0;border-bottom:1px solid var(--neutrals-200)}
-.benefit-item:last-child{border-bottom:none}
-.benefit-icon{width:36px;height:36px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
-.benefit-icon.unlocked{background:var(--primary-100)}
-.benefit-icon.locked{background:var(--neutrals-200)}
-.benefit-text{flex:1}
-.benefit-title{font-size:var(--fs-body);font-weight:700;color:var(--primary-600)}
-.benefit-title.locked{color:var(--neutrals-400)}
-.benefit-desc{font-size:var(--fs-small);color:var(--neutrals-500);margin-top:2px}
-
-/* ========== HISTORY PAGE ========== */
-.history-scroll{height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:90px}
-.history-summary{display:flex;gap:10px;padding:16px;margin-bottom:4px}
-.history-stat{flex:1;background:#fff;border:1px solid var(--neutrals-200);border-radius:14px;padding:14px;text-align:center}
-.history-stat-value{font-size:var(--fs-newH2);font-weight:900;color:var(--brand-01)}
-.history-stat-label{font-size:var(--fs-small);color:var(--neutrals-500);margin-top:2px}
-.history-list{padding:0 16px}
-.history-item{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--neutrals-200)}
-.history-item:last-child{border-bottom:none}
-.history-item-icon{width:40px;height:40px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.history-item-info{flex:1}
-.history-item-title{font-size:var(--fs-body);font-weight:600;color:var(--primary-600)}
-.history-item-date{font-size:var(--fs-small);color:var(--neutrals-500);margin-top:2px}
-.history-item-pts{font-size:var(--fs-body);font-weight:800;color:var(--brand-01)}
-
-/* ========== LEVEL UP OVERLAY ========== */
-.levelup-overlay{position:absolute;inset:0;background:rgba(0,0,0,.6);z-index:500;display:flex;align-items:center;justify-content:center;visibility:hidden;opacity:0;transition:all .3s}
-.levelup-overlay.active{visibility:visible;opacity:1}
-.levelup-card{background:#fff;border-radius:24px;padding:32px 24px;text-align:center;max-width:320px;width:90%;transform:scale(.8);transition:transform .4s cubic-bezier(.34,1.56,.64,1);box-shadow:0 20px 60px rgba(0,0,0,.3)}
-.levelup-overlay.active .levelup-card{transform:scale(1)}
-.levelup-icon{font-size:64px;margin-bottom:16px;animation:bounce 1s ease infinite}
-@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-.levelup-title{font-size:var(--fs-newH2);font-weight:900;color:var(--primary-600);margin-bottom:8px}
-.levelup-subtitle{font-size:var(--fs-body);color:var(--neutrals-500);line-height:var(--lh-body);margin-bottom:20px}
-.levelup-new-badge{display:inline-flex;align-items:center;gap:6px;background:var(--tier-gold-bg);border:2px solid var(--tier-gold);border-radius:100px;padding:8px 20px;font-size:var(--fs-h4);font-weight:800;color:var(--primary-600);margin-bottom:20px}
-
-/* ========== CONFETTI ========== */
+.tab-bar{position:absolute;bottom:0;left:0;right:0;height:80px;background:#fff;border-top:1px solid var(--neutrals-200);display:flex;align-items:flex-start;padding-top:8px;z-index:100}
+.tab-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;user-select:none}
+.tab-item svg{width:24px;height:24px}
+.tab-item span{font-size:10px;font-weight:600;color:var(--neutrals-500)}
+.tab-item.on span{color:var(--brand-01);font-weight:700}
+.tab-item.on svg{color:var(--brand-01)}
+.inner-header{padding:54px 15px 12px;display:flex;align-items:center;gap:12px;background:#fff;position:sticky;top:0;z-index:10}
+.back-btn{width:40px;height:40px;background:var(--neutrals-200);border-radius:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.back-btn:active{background:var(--neutrals-300)}
+.page-title{font-size:var(--fs-h4);font-weight:700;color:var(--primary-600)}
+.grad-btn{width:100%;height:48px;border-radius:100px;border:none;cursor:pointer;background:linear-gradient(90deg,var(--primary),var(--primaryAcc3));color:#fff;font-family:inherit;font-size:var(--fs-cta);font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 12px rgba(72,173,111,.25)}
+.grad-btn:active{transform:scale(.97)}
+.grad-btn.sm{height:36px;font-size:13px;width:auto;padding:0 22px;border-radius:100px}
+.sec-btn{height:48px;border-radius:100px;cursor:pointer;background:#fff;border:2px solid var(--primaryAcc1);color:var(--primary-600);font-family:inherit;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 24px;width:100%}
+.sec-btn:active{background:var(--primary-100)}
+.progress-bar{width:100%;background:var(--neutrals-300);border-radius:5px;height:10px;overflow:hidden}
+.progress-fill{height:100%;border-radius:5px;transition:width 1s cubic-bezier(.4,0,.2,1)}
+.scroll{height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:90px}
+.card{background:#fff;border-radius:14px;border:1px solid var(--neutrals-200);overflow:hidden}
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:10px;font-size:var(--fs-xSmall);font-weight:700}
+/* Modal */
+.modal-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);z-index:200;visibility:hidden;opacity:0;transition:all .3s}
+.modal-overlay.active{visibility:visible;opacity:1}
+.modal-sheet{position:absolute;bottom:0;left:0;right:0;background:#fff;border-radius:24px 24px 0 0;transform:translateY(100%);transition:transform .35s cubic-bezier(.32,.72,0,1);padding:20px 15px 40px;z-index:201}
+.modal-overlay.active .modal-sheet{transform:translateY(0)}
+.modal-handle{width:40px;height:4px;background:var(--neutrals-300);border-radius:2px;margin:0 auto 20px}
+/* Confetti */
 .confetti-container{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;overflow:hidden;z-index:600}
-.confetti-piece{position:absolute;width:8px;height:14px;border-radius:2px;top:-20px;animation:confettiFall 2.5s ease-in forwards}
-@keyframes confettiFall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(900px) rotate(720deg);opacity:0}}
-
-/* ========== EXPANDABLE SECTION ========== */
-.expandable-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer;background:#fff;border-bottom:1px solid var(--neutrals-200)}
-.expandable-header:active{background:var(--neutrals-100)}
-.expandable-header .arrow{transition:transform .3s;font-size:14px;color:var(--neutrals-400)}
-.expandable-header.open .arrow{transform:rotate(180deg)}
-.expandable-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
-.expandable-body.open{max-height:500px}
-
-/* ========== TOAST ========== */
+.confetti-piece{position:absolute;width:8px;height:14px;border-radius:2px;top:-20px;animation:cFall 2.5s ease-in forwards}
+@keyframes cFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(900px) rotate(720deg);opacity:0}}
+/* Level up overlay */
+.lu-overlay{position:absolute;inset:0;background:rgba(0,0,0,.6);z-index:500;display:flex;align-items:center;justify-content:center;visibility:hidden;opacity:0;transition:all .3s}
+.lu-overlay.active{visibility:visible;opacity:1}
+.lu-card{background:#fff;border-radius:24px;padding:32px 24px;text-align:center;max-width:320px;width:90%;transform:scale(.8);transition:transform .4s cubic-bezier(.34,1.56,.64,1);box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.lu-overlay.active .lu-card{transform:scale(1)}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+/* Toast */
 .toast{position:absolute;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--primary-600);color:#fff;padding:12px 24px;border-radius:100px;font-size:var(--fs-body);font-weight:700;z-index:400;opacity:0;transition:all .3s;white-space:nowrap;pointer-events:none}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-
-/* ========== UTILITY ========== */
-.divider{height:8px;background:var(--neutrals-200)}
-.hidden{display:none}
-.clickable{cursor:pointer}
+/* Retailer scroll */
+.retailer-scroll{display:flex;gap:10px;overflow-x:auto;padding:0 16px 8px;scroll-snap-type:x mandatory}
+.retailer-chip{flex-shrink:0;display:flex;align-items:center;gap:8px;padding:8px 16px 8px 8px;background:#fff;border:1.5px solid var(--neutrals-300);border-radius:100px;cursor:pointer;scroll-snap-align:start;transition:all .15s}
+.retailer-chip.sel{border-color:var(--brand-01);background:var(--primary-100)}
+.retailer-chip:active{border-color:var(--brand-01);background:var(--primary-100)}
+.retailer-chip img{width:28px;height:28px;border-radius:14px;object-fit:contain;background:#fff}
+.retailer-chip span{font-size:12px;font-weight:600;color:var(--primary-600);white-space:nowrap}
+/* Processing */
+.proc-spin{width:60px;height:60px;border:4px solid var(--neutrals-200);border-top-color:var(--brand-01);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* Success check */
+.suc-check{width:80px;height:80px;border-radius:40px;background:var(--primary-100);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;animation:popIn .4s ease}
+@keyframes popIn{0%{transform:scale(0);opacity:0}60%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
 </style>
 </head>
 <body>
-
 <div class="device-frame" id="device">
   <div class="dynamic-island"></div>
-  <div class="status-bar">
-    <span class="time" id="statusTime">9:41</span>
-    <span class="icons">
-      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M1 12.5h2v3H1zM5 9.5h2v6H5zM9 6.5h2v9H9zM13 3.5h2v12h-2z"/></svg>
-      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 2C4.5 2 1.5 3.8.2 6.5l1.4 1C2.8 5.2 5.2 3.8 8 3.8s5.2 1.4 6.4 3.7l1.4-1C14.5 3.8 11.5 2 8 2zm0 4c-2 0-3.8 1-4.9 2.5l1.4 1C5.4 8.5 6.6 7.8 8 7.8s2.6.7 3.5 1.7l1.4-1C11.8 7 10 6 8 6zm0 4c-.8 0-1.5.4-2 1l2 2.5L10 11c-.5-.6-1.2-1-2-1z"/></svg>
-      <svg viewBox="0 0 24 12" fill="currentColor"><rect x="0" y="1" width="20" height="10" rx="2" stroke="currentColor" fill="none" stroke-width="1"/><rect x="21" y="3.5" width="2" height="5" rx="1"/><rect x="2" y="3" width="14" height="6" rx="1" fill="var(--success)"/></svg>
-    </span>
-  </div>
+  <div class="status-bar"><span class="time" id="sTime">9:41</span><span class="icons"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M1 12.5h2v3H1zM5 9.5h2v6H5zM9 6.5h2v9H9zM13 3.5h2v12h-2z"/></svg><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 2C4.5 2 1.5 3.8.2 6.5l1.4 1C2.8 5.2 5.2 3.8 8 3.8s5.2 1.4 6.4 3.7l1.4-1C14.5 3.8 11.5 2 8 2zm0 4c-2 0-3.8 1-4.9 2.5l1.4 1C5.4 8.5 6.6 7.8 8 7.8s2.6.7 3.5 1.7l1.4-1C11.8 7 10 6 8 6zm0 4c-.8 0-1.5.4-2 1l2 2.5L10 11c-.5-.6-1.2-1-2-1z"/></svg><svg viewBox="0 0 24 12" fill="currentColor"><rect x="0" y="1" width="20" height="10" rx="2" stroke="currentColor" fill="none" stroke-width="1"/><rect x="21" y="3.5" width="2" height="5" rx="1"/><rect x="2" y="3" width="14" height="6" rx="1" fill="var(--success)"/></svg></span></div>
 
   <div class="screens">
-
-    <!-- ==================== SCREEN: HOME ==================== -->
-    <div class="screen active" id="screen-home">
-      <div class="home-scroll">
-        <!-- Hero -->
-        <div class="home-hero">
-          <div class="home-hero-inner">
-            <div class="home-greeting">Hola, María 👋</div>
-            <div class="home-subtitle">¿Qué vas a ahorrar hoy?</div>
-            <!-- Tier badge -->
-            <div class="tier-badge-home" onclick="goTo('nivel')">
-              <div class="tier-badge-icon">🥈</div>
-              <div class="tier-badge-info">
-                <div class="tier-badge-label">Tu nivel</div>
-                <div class="tier-badge-name">Cuponera Plata</div>
-              </div>
-              <div class="tier-badge-arrow">›</div>
+    <!-- ===== HOME ===== -->
+    <div class="screen active" id="s-home">
+      <div class="scroll" id="homeScroll">
+        <div class="home-hero" style="padding:54px 0 0;background:linear-gradient(160deg,#2D5437 0%,#48AD6F 50%,#5EBC82 100%);position:relative;overflow:hidden">
+          <div style="position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:rgba(255,255,255,.06);border-radius:50%"></div>
+          <div style="padding:28px 16px 20px;position:relative;z-index:1">
+            <div style="font-size:22px;font-weight:700;color:#fff">Hola, María 👋</div>
+            <div style="font-size:14px;color:rgba(255,255,255,.8);margin-top:4px">¿Qué vas a ahorrar hoy?</div>
+            <div onclick="go('nivel')" style="margin-top:14px;display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.15);border-radius:16px;padding:12px 14px;cursor:pointer;backdrop-filter:blur(8px)">
+              <div style="width:44px;height:44px;border-radius:22px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:24px">🥈</div>
+              <div style="flex:1"><div style="font-size:11px;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.5px;font-weight:600">Tu nivel</div><div style="font-size:16px;font-weight:800;color:#fff">Cuponera Plata</div></div>
+              <div style="color:rgba(255,255,255,.6);font-size:18px">›</div>
             </div>
+          </div>
+        </div>
+
+        <!-- Retailer carousel -->
+        <div style="padding:14px 0 6px">
+          <div style="padding:0 16px;font-size:14px;font-weight:700;color:var(--primary-600);margin-bottom:10px">Tus tiendas</div>
+          <div class="retailer-scroll">
+            <div class="retailer-chip sel"><img src="https://jolt-assets.s3.eu-central-1.amazonaws.com/template/57c0fd46-58ae-4d60-8795-48e42d8f6bb9.png" alt="Mercadona"><span>Mercadona</span></div>
+            <div class="retailer-chip"><img src="https://jolt-assets.s3.eu-central-1.amazonaws.com/template/21ada79f-e21e-456c-8802-5db23bff686e.png" alt="Carrefour"><span>Carrefour</span></div>
+            <div class="retailer-chip"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Lidl-Logo.svg/200px-Lidl-Logo.svg.png" alt="Lidl"><span>Lidl</span></div>
+            <div class="retailer-chip"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Logo_Alcampo_%282015%29.svg/200px-Logo_Alcampo_%282015%29.svg.png" alt="Alcampo"><span>Alcampo</span></div>
+            <div class="retailer-chip"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/El_Corte_Ingl%C3%A9s_logo.svg/200px-El_Corte_Ingl%C3%A9s_logo.svg.png" alt="El Corte Inglés"><span>El Corte Inglés</span></div>
           </div>
         </div>
 
         <!-- Wallet card -->
-        <div class="wallet-card-home">
-          <div class="wallet-card-row">
-            <span class="wallet-card-label">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 4H3a2 2 0 00-2 2v12a2 2 0 002 2h18a2 2 0 002-2V6a2 2 0 00-2-2z" stroke="var(--brand-01)" stroke-width="2"/><circle cx="17" cy="13" r="2" fill="var(--brand-01)"/></svg>
-              Mi Cartera
-            </span>
-            <span class="wallet-card-amount">7,70€</span>
+        <div style="margin:4px 16px 12px;background:#fff;border-radius:16px;padding:16px;box-shadow:0 2px 12px rgba(0,0,0,.06);cursor:pointer" onclick="go('wallet')">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <span style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:var(--primary-600)">💳 Mi Cartera</span>
+            <span style="font-size:24px;font-weight:800;color:var(--primary-600)">7,70€</span>
           </div>
-          <div class="progress-container">
-            <div class="progress-fill" style="width:77%;background:linear-gradient(90deg,var(--primaryAcc2),var(--brand-01))"></div>
-          </div>
-          <div class="wallet-progress-text">Te faltan <span class="hl">2,30€</span> para tu reembolso</div>
+          <div class="progress-bar"><div class="progress-fill" style="width:77%;background:linear-gradient(90deg,var(--primaryAcc2),var(--brand-01))"></div></div>
+          <div style="font-size:11px;font-weight:600;color:var(--neutrals-500);text-align:center;margin-top:8px">Te faltan <span style="color:var(--brand-02);font-weight:700">2,30€</span> para tu reembolso</div>
         </div>
 
         <!-- Points banner -->
-        <div class="points-banner" onclick="goTo('history')">
-          <div class="points-icon">⭐</div>
-          <div class="points-text">
-            <div class="points-title">247 puntos acumulados</div>
-            <div class="points-sub">Te faltan 153 para nivel Oro</div>
-          </div>
-          <div class="points-arrow">›</div>
+        <div onclick="go('history')" style="margin:0 16px 12px;padding:14px 16px;background:var(--primary-100);border:1px solid var(--primary-200);border-radius:14px;display:flex;align-items:center;gap:12px;cursor:pointer">
+          <div style="width:40px;height:40px;border-radius:20px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:20px">⭐</div>
+          <div style="flex:1"><div style="font-size:14px;font-weight:700;color:var(--primary-600)">247 puntos</div><div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">Te faltan 153 para nivel Oro</div></div>
+          <div style="font-size:16px;color:var(--neutrals-400)">›</div>
         </div>
 
-        <!-- Exclusive offers -->
-        <div class="home-section">
-          <div class="home-section-title">
-            Ofertas exclusivas Plata ✨
-            <span class="see-all" onclick="goTo('nivel')">Ver nivel</span>
-          </div>
-          <div class="offers-grid">
-            <div class="offer-card">
-              <div class="offer-tier-tag" style="background:var(--tier-silver-bg);color:var(--neutrals-600)">🥈 Plata</div>
-              <div class="offer-img">
-                <img src="https://lacuponera.es/cdn-cgi/image/format=webp,fit=contain,width=200/https://images.ctfassets.net/e2ixtpoaejfr/5MhyREfyBQwU37c8g3G1W3/31685a56d5ddd2f7fa4f5afde8cacc64/Fairy.png" alt="Fairy">
-              </div>
-              <div class="offer-info">
-                <div class="offer-brand">Fairy Platinum</div>
-                <div class="offer-prize">Ahorra 2,50€</div>
-              </div>
-            </div>
-            <div class="offer-card">
-              <div class="offer-tier-tag" style="background:var(--tier-silver-bg);color:var(--neutrals-600)">🥈 Plata</div>
-              <div class="offer-img">
-                <img src="https://lacuponera.es/cdn-cgi/image/format=webp,fit=contain,width=200/https://images.ctfassets.net/e2ixtpoaejfr/6wUL6WVf2JFapiF1mPaSsG/ed4bf8d93c547b9c3dc5aadd1a8d2a77/Ariel.png" alt="Ariel">
-              </div>
-              <div class="offer-info">
-                <div class="offer-brand">Ariel All-in-1 Pods</div>
-                <div class="offer-prize">Ahorra 3,00€</div>
-              </div>
-            </div>
-            <div class="offer-card">
-              <div class="offer-tag">Nuevo</div>
-              <div class="offer-img">
-                <img src="https://lacuponera.es/cdn-cgi/image/format=webp,fit=contain,width=200/https://images.ctfassets.net/e2ixtpoaejfr/6rRJfbgK9WpzW3jHMKqOjD/8cc2ba3fe3f2b71d3ae36a8e2b2bfeb3/OralB.png" alt="Oral-B">
-              </div>
-              <div class="offer-info">
-                <div class="offer-brand">Oral-B Pro-Expert</div>
-                <div class="offer-prize">Ahorra 1,50€</div>
-              </div>
-            </div>
-            <div class="offer-card">
-              <div class="offer-tier-tag" style="background:var(--tier-gold-bg);color:#8B7000">🔒 Oro</div>
-              <div class="offer-img" style="filter:grayscale(.5) opacity(.6)">
-                <img src="https://lacuponera.es/cdn-cgi/image/format=webp,fit=contain,width=200/https://images.ctfassets.net/e2ixtpoaejfr/1wK91bpI0AwM8vVn1RnDqs/a91bb2847d67e8e9e09c8bad2b05e399/Gillette.png" alt="Gillette">
-              </div>
-              <div class="offer-info">
-                <div class="offer-brand" style="color:var(--neutrals-400)">Gillette ProGlide</div>
-                <div class="offer-prize" style="color:var(--neutrals-400)">🔒 Desbloquea en Oro</div>
-              </div>
-            </div>
+        <!-- MGM Banner -->
+        <div onclick="go('mgm')" style="margin:0 16px 16px;padding:16px;background:linear-gradient(135deg,#E8EDFF,#fff);border:1.5px solid #C5D0FF;border-radius:14px;cursor:pointer;display:flex;align-items:center;gap:12px">
+          <div style="width:44px;height:44px;border-radius:22px;background:var(--brand-02);display:flex;align-items:center;justify-content:center;font-size:22px">👥</div>
+          <div style="flex:1"><div style="font-size:14px;font-weight:700;color:var(--primary-600)">Invita y gana 5€</div><div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">Comparte tu link personal</div></div>
+          <div style="font-size:16px;color:var(--neutrals-400)">›</div>
+        </div>
+
+        <!-- Offers -->
+        <div style="padding:0 16px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:var(--primary-600);margin-bottom:12px;display:flex;justify-content:space-between"><span>Ofertas exclusivas Plata ✨</span><span style="font-size:11px;font-weight:600;color:var(--brand-02);cursor:pointer">Ver todas</span></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div class="card" style="cursor:pointer;position:relative"><div style="position:absolute;top:8px;left:8px;padding:2px 8px;border-radius:10px;font-size:9px;font-weight:700;background:var(--tier-silver-bg);color:var(--neutrals-600)">🥈 Plata</div><div style="width:100%;aspect-ratio:1;background:var(--neutrals-100);display:flex;align-items:center;justify-content:center;overflow:hidden"><img src="https://www.lacuponera.es/promociones/_next/image?url=https%3A%2F%2Fjolt-assets.s3.eu-central-1.amazonaws.com%2Ftemplate%2F20d47f33-e596-446e-8b22-c1f4fe09f4a0.jpeg&w=640&q=75" style="width:100%;height:100%;object-fit:cover"></div><div style="padding:8px 10px"><div style="font-size:11px;font-weight:700;color:var(--primary-600)">Fairy Original</div><div style="font-size:11px;font-weight:700;color:var(--primaryAcc1);margin-top:2px">Ahorra 50%</div></div></div>
+            <div class="card" style="cursor:pointer;position:relative"><div style="position:absolute;top:8px;left:8px;padding:2px 8px;border-radius:10px;font-size:9px;font-weight:700;background:var(--tier-silver-bg);color:var(--neutrals-600)">🥈 Plata</div><div style="width:100%;aspect-ratio:1;background:var(--neutrals-100);display:flex;align-items:center;justify-content:center;overflow:hidden"><img src="https://www.lacuponera.es/promociones/_next/image?url=https%3A%2F%2Fjolt-assets.s3.eu-central-1.amazonaws.com%2Ftemplate%2Fdc562c9b-4962-4d70-b321-ef101a83a329.jpeg&w=640&q=75" style="width:100%;height:100%;object-fit:cover"></div><div style="padding:8px 10px"><div style="font-size:11px;font-weight:700;color:var(--primary-600)">Ariel Líquido</div><div style="font-size:11px;font-weight:700;color:var(--primaryAcc1);margin-top:2px">Ahorra 2€</div></div></div>
+            <div class="card" style="cursor:pointer;position:relative"><div style="position:absolute;top:8px;right:8px;background:var(--secondary-01);padding:2px 8px;border-radius:10px;font-size:9px;font-weight:700;color:var(--primary-600)">Nuevo</div><div style="width:100%;aspect-ratio:1;background:var(--neutrals-100);display:flex;align-items:center;justify-content:center;overflow:hidden"><img src="https://www.lacuponera.es/promociones/_next/image?url=https%3A%2F%2Fjolt-assets.s3.eu-central-1.amazonaws.com%2Ftemplate%2F4556a36e-a197-4b97-99d5-26e1a02fdc43.png&w=640&q=75" style="width:100%;height:100%;object-fit:cover"></div><div style="padding:8px 10px"><div style="font-size:11px;font-weight:700;color:var(--primary-600)">Oral-B ProExpert</div><div style="font-size:11px;font-weight:700;color:var(--primaryAcc1);margin-top:2px">2x1</div></div></div>
+            <div class="card" style="cursor:pointer;position:relative"><div style="position:absolute;top:8px;left:8px;padding:2px 8px;border-radius:10px;font-size:9px;font-weight:700;background:var(--tier-gold-bg);color:#8B7000">🔒 Oro</div><div style="width:100%;aspect-ratio:1;background:var(--neutrals-100);display:flex;align-items:center;justify-content:center;overflow:hidden;filter:grayscale(.4) opacity(.6)"><img src="https://www.lacuponera.es/promociones/_next/image?url=https%3A%2F%2Fjolt-assets.s3.eu-central-1.amazonaws.com%2Ftemplate%2F0223085e-28ca-4087-9a32-88a42b629eb1.jpeg&w=640&q=75" style="width:100%;height:100%;object-fit:cover"></div><div style="padding:8px 10px"><div style="font-size:11px;font-weight:700;color:var(--neutrals-400)">Pantene</div><div style="font-size:11px;font-weight:700;color:var(--neutrals-400);margin-top:2px">🔒 Desbloquea en Oro</div></div></div>
           </div>
         </div>
 
-        <!-- How to earn section -->
-        <div class="home-section">
-          <div class="home-section-title">Cómo ganar puntos</div>
+        <!-- How to earn -->
+        <div style="padding:0 16px 20px">
+          <div style="font-size:16px;font-weight:700;color:var(--primary-600);margin-bottom:12px">Cómo ganar puntos</div>
           <div style="display:flex;flex-direction:column;gap:8px">
-            <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--neutrals-100);border-radius:12px">
-              <div style="width:36px;height:36px;border-radius:18px;background:var(--primary-100);display:flex;align-items:center;justify-content:center;font-size:16px">📷</div>
-              <div style="flex:1"><span style="font-size:13px;font-weight:600;color:var(--primary-600)">Sube un ticket</span><br><span style="font-size:11px;color:var(--neutrals-500)">+10 puntos por ticket</span></div>
-            </div>
-            <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--neutrals-100);border-radius:12px">
-              <div style="width:36px;height:36px;border-radius:18px;background:var(--primary-100);display:flex;align-items:center;justify-content:center;font-size:16px">👥</div>
-              <div style="flex:1"><span style="font-size:13px;font-weight:600;color:var(--primary-600)">Invita a un amigo</span><br><span style="font-size:11px;color:var(--neutrals-500)">+50 puntos si se registra</span></div>
-            </div>
-            <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--neutrals-100);border-radius:12px">
-              <div style="width:36px;height:36px;border-radius:18px;background:var(--primary-100);display:flex;align-items:center;justify-content:center;font-size:16px">🔥</div>
-              <div style="flex:1"><span style="font-size:13px;font-weight:600;color:var(--primary-600)">Racha de 7 días</span><br><span style="font-size:11px;color:var(--neutrals-500)">+25 puntos bonus</span></div>
-            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--neutrals-100);border-radius:12px"><div style="width:36px;height:36px;border-radius:18px;background:var(--primary-100);display:flex;align-items:center;justify-content:center;font-size:16px">📷</div><div style="flex:1"><span style="font-size:13px;font-weight:600;color:var(--primary-600)">Sube un ticket</span><br><span style="font-size:11px;color:var(--neutrals-500)">+10 puntos por ticket</span></div></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--neutrals-100);border-radius:12px"><div style="width:36px;height:36px;border-radius:18px;background:var(--primary-100);display:flex;align-items:center;justify-content:center;font-size:16px">👥</div><div style="flex:1"><span style="font-size:13px;font-weight:600;color:var(--primary-600)">Invita a un amigo</span><br><span style="font-size:11px;color:var(--neutrals-500)">+50 puntos si se registra</span></div></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--neutrals-100);border-radius:12px"><div style="width:36px;height:36px;border-radius:18px;background:var(--primary-100);display:flex;align-items:center;justify-content:center;font-size:16px">🔥</div><div style="flex:1"><span style="font-size:13px;font-weight:600;color:var(--primary-600)">Racha de 7 días</span><br><span style="font-size:11px;color:var(--neutrals-500)">+25 puntos bonus</span></div></div>
           </div>
         </div>
       </div>
-
-      <!-- Tab bar -->
-      <nav class="tab-bar">
-        <div class="tab-bar-item active" onclick="switchTab('home')">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z" stroke="currentColor" stroke-width="2"/></svg>
-          <span>Inicio</span>
-        </div>
-        <div class="tab-bar-item" onclick="switchTab('offers')">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z" stroke="currentColor" stroke-width="2"/><circle cx="7" cy="7" r="1" fill="currentColor"/></svg>
-          <span>Ofertas</span>
-        </div>
-        <div class="tab-bar-item" onclick="showToast('+10 puntos por ticket 🎉')">
-          <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="2"/><path d="M2 8h20" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="14" r="3" stroke="currentColor" stroke-width="2"/></svg>
-          <span>Escanear</span>
-        </div>
-        <div class="tab-bar-item" onclick="switchTab('rewards')">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.27 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z" stroke="currentColor" stroke-width="2"/></svg>
-          <span>Premios</span>
-        </div>
-        <div class="tab-bar-item" onclick="goTo('nivel')">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/></svg>
-          <span>Perfil</span>
-        </div>
+      <!-- Tab -->
+      <nav class="tab-bar" id="tabHome">
+        <div class="tab-item on" onclick="tab('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/></svg><span>Inicio</span></div>
+        <div class="tab-item" onclick="go('wallet')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8h20"/><circle cx="17" cy="14" r="2"/></svg><span>Cartera</span></div>
+        <div class="tab-item" onclick="toast('+10 puntos 📷')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3"/></svg><span>Escanear</span></div>
+        <div class="tab-item" onclick="go('rewards')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.27 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg><span>Premios</span></div>
+        <div class="tab-item" onclick="go('nivel')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Perfil</span></div>
       </nav>
     </div>
 
-    <!-- ==================== SCREEN: MI NIVEL ==================== -->
-    <div class="screen" id="screen-nivel">
-      <div class="nivel-scroll">
-        <div class="inner-header" style="position:sticky;top:0;z-index:10;background:#fff">
-          <div class="back-btn" onclick="goBack()">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19l-7-7 7-7" stroke="var(--primary-600)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <div class="page-title">Mi Nivel</div>
+    <!-- ===== WALLET ===== -->
+    <div class="screen" id="s-wallet">
+      <div class="scroll">
+        <div class="inner-header"><div class="back-btn" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="var(--primary-600)" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div><div class="page-title">Mi Cartera</div></div>
+        <!-- Wallet card -->
+        <div style="margin:0 16px 16px;padding:20px;border-radius:16px;background:linear-gradient(135deg,#2D5437 0%,#48AD6F 50%,#5EBC82 100%);position:relative;overflow:hidden">
+          <div style="position:absolute;top:-30px;right:-30px;width:140px;height:140px;background:rgba(255,255,255,.06);border-radius:50%"></div>
+          <div style="color:rgba(255,255,255,.6);font-size:14px;font-weight:700">Saldo disponible</div>
+          <div style="color:#fff;font-size:48px;font-weight:900;margin-top:8px">7,70€</div>
+          <div style="margin-top:16px;background:rgba(255,255,255,.2);border-radius:6px;height:10px;overflow:hidden"><div style="height:100%;width:77%;background:#fff;border-radius:6px"></div></div>
+          <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:11px;color:rgba(255,255,255,.7)"><span>7,70€</span><span>Meta: 10€</span></div>
         </div>
-
-        <!-- Hero -->
-        <div class="nivel-hero">
-          <div class="nivel-current-label">Tu nivel actual</div>
-          <div class="nivel-current-name">Cuponera Plata 🥈</div>
-          <div class="nivel-current-pts">247 puntos — Llevas 3 meses activo</div>
-          <div class="nivel-progress">
-            <div class="progress-container">
-              <div class="progress-fill" id="tierProgressBar" style="width:0%"></div>
-            </div>
-            <div class="nivel-progress-labels">
-              <span>Plata</span>
-              <span>Oro — faltan 153 pts</span>
-            </div>
+        <!-- Actions -->
+        <div style="display:flex;gap:10px;padding:0 16px;margin-bottom:20px">
+          <div onclick="openCashout()" style="flex:1;padding:16px;background:var(--neutrals-100);border-radius:14px;text-align:center;cursor:pointer"><div style="font-size:24px;margin-bottom:4px">💸</div><div style="font-size:13px;font-weight:700;color:var(--primary-600)">Cobrar</div><div style="font-size:10px;color:var(--neutrals-500);margin-top:2px">Mín. 10€</div></div>
+          <div style="flex:1;padding:16px;background:var(--neutrals-100);border-radius:14px;text-align:center;cursor:pointer" onclick="toast('📷 Abre la cámara')"><div style="font-size:24px;margin-bottom:4px">📷</div><div style="font-size:13px;font-weight:700;color:var(--primary-600)">Escanear</div><div style="font-size:10px;color:var(--neutrals-500);margin-top:2px">Sube ticket</div></div>
+          <div style="flex:1;padding:16px;background:var(--neutrals-100);border-radius:14px;text-align:center;cursor:pointer" onclick="go('history')"><div style="font-size:24px;margin-bottom:4px">📊</div><div style="font-size:13px;font-weight:700;color:var(--primary-600)">Historial</div><div style="font-size:10px;color:var(--neutrals-500);margin-top:2px">Ver puntos</div></div>
+        </div>
+        <!-- Recent -->
+        <div style="padding:0 16px"><div style="font-size:16px;font-weight:700;color:var(--primary-600);margin-bottom:12px">Movimientos recientes</div>
+          <div style="display:flex;flex-direction:column;gap:1px;background:var(--neutrals-200);border-radius:14px;overflow:hidden">
+            <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:#fff"><div style="width:36px;height:36px;border-radius:18px;background:var(--primary-100);display:flex;align-items:center;justify-content:center;font-size:16px">📷</div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--primary-600)">Fairy Original</div><div style="font-size:11px;color:var(--neutrals-500)">Hoy, 14:32</div></div><div style="font-size:14px;font-weight:800;color:var(--brand-01)">+1,50€</div></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:#fff"><div style="width:36px;height:36px;border-radius:18px;background:var(--primary-100);display:flex;align-items:center;justify-content:center;font-size:16px">📷</div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--primary-600)">Ariel All-in-1 Pods</div><div style="font-size:11px;color:var(--neutrals-500)">Ayer</div></div><div style="font-size:14px;font-weight:800;color:var(--brand-01)">+3,00€</div></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:#fff"><div style="width:36px;height:36px;border-radius:18px;background:#E8EDFF;display:flex;align-items:center;justify-content:center;font-size:16px">💸</div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--primary-600)">Reembolso Bizum</div><div style="font-size:11px;color:var(--neutrals-500)">15 Abr</div></div><div style="font-size:14px;font-weight:800;color:var(--secondary-02)">-10,00€</div></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:#fff"><div style="width:36px;height:36px;border-radius:18px;background:var(--primary-100);display:flex;align-items:center;justify-content:center;font-size:16px">📷</div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--primary-600)">Pantene Miracles</div><div style="font-size:11px;color:var(--neutrals-500)">12 Abr</div></div><div style="font-size:14px;font-weight:800;color:var(--brand-01)">+2,00€</div></div>
           </div>
         </div>
+        <div style="padding:16px"><div style="text-align:center;font-size:12px;font-weight:700;color:var(--neutrals-500)">Total ahorrado: 42,50€ 🎉</div></div>
+      </div>
+      <nav class="tab-bar"><div class="tab-item" onclick="root()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/></svg><span>Inicio</span></div><div class="tab-item on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8h20"/><circle cx="17" cy="14" r="2"/></svg><span>Cartera</span></div><div class="tab-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3"/></svg><span>Escanear</span></div><div class="tab-item" onclick="go('rewards')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.27 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg><span>Premios</span></div><div class="tab-item" onclick="go('nivel')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Perfil</span></div></nav>
+    </div>
 
-        <!-- Quick stats -->
+    <!-- ===== MI NIVEL ===== -->
+    <div class="screen" id="s-nivel">
+      <div class="scroll">
+        <div class="inner-header"><div class="back-btn" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="var(--primary-600)" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div><div class="page-title">Mi Nivel</div></div>
+        <div style="background:linear-gradient(135deg,var(--primaryAcc2),var(--brand-01));padding:24px 16px;position:relative;overflow:hidden">
+          <div style="position:absolute;right:-10px;top:-10px;font-size:100px;opacity:.1">⭐</div>
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.8);font-weight:600">Tu nivel actual</div>
+          <div style="font-size:28px;font-weight:900;color:#fff;margin-top:4px">Cuponera Plata 🥈</div>
+          <div style="font-size:14px;color:rgba(255,255,255,.9);margin-top:6px">247 puntos — 3 meses activa</div>
+          <div style="margin-top:14px"><div class="progress-bar" style="background:rgba(255,255,255,.3);height:12px;border-radius:6px"><div class="progress-fill" id="tierProg" style="width:0%;background:#fff"></div></div><div style="display:flex;justify-content:space-between;margin-top:6px;font-size:11px;color:rgba(255,255,255,.8);font-weight:600"><span>Plata</span><span>Oro — 153 pts</span></div></div>
+        </div>
         <div style="display:flex;gap:10px;padding:16px">
-          <div style="flex:1;text-align:center;padding:14px;background:var(--primary-100);border-radius:14px">
-            <div style="font-size:24px;font-weight:900;color:var(--primary-400)">247</div>
-            <div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">Puntos totales</div>
-          </div>
-          <div style="flex:1;text-align:center;padding:14px;background:var(--neutrals-100);border-radius:14px">
-            <div style="font-size:24px;font-weight:900;color:var(--primary-600)">12</div>
-            <div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">Tickets subidos</div>
-          </div>
-          <div style="flex:1;text-align:center;padding:14px;background:var(--neutrals-100);border-radius:14px">
-            <div style="font-size:24px;font-weight:900;color:var(--primary-600)">3</div>
-            <div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">Meses activa</div>
-          </div>
+          <div style="flex:1;text-align:center;padding:14px;background:var(--primary-100);border-radius:14px"><div style="font-size:24px;font-weight:900;color:var(--primary-400)">247</div><div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">Puntos</div></div>
+          <div style="flex:1;text-align:center;padding:14px;background:var(--neutrals-100);border-radius:14px"><div style="font-size:24px;font-weight:900;color:var(--primary-600)">12</div><div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">Tickets</div></div>
+          <div style="flex:1;text-align:center;padding:14px;background:var(--neutrals-100);border-radius:14px"><div style="font-size:24px;font-weight:900;color:var(--primary-600)">3</div><div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">Meses</div></div>
         </div>
-
-        <!-- Tier list -->
-        <div class="nivel-section">
-          <div class="nivel-section-title">Niveles</div>
-          <div class="tier-list">
-            <!-- Bronze - completed -->
-            <div class="tier-item" onclick="goTo('benefits','bronze')" style="opacity:.7">
-              <div class="tier-icon" style="background:var(--tier-bronze-bg)">🥉</div>
-              <div class="tier-info">
-                <div class="tier-name">Bronce <span class="tier-check">✓</span></div>
-                <div class="tier-desc">0–99 puntos</div>
-              </div>
-              <div class="tier-arrow">›</div>
-            </div>
-            <!-- Silver - current -->
-            <div class="tier-item current" onclick="goTo('benefits','silver')">
-              <div class="tier-icon" style="background:var(--tier-silver-bg)">🥈</div>
-              <div class="tier-info">
-                <div class="tier-name">Plata <span class="tier-badge">Actual</span></div>
-                <div class="tier-desc">100–399 puntos · Envío prioritario</div>
-              </div>
-              <div class="tier-arrow">›</div>
-            </div>
-            <!-- Gold - next -->
-            <div class="tier-item" onclick="goTo('benefits','gold')">
-              <div class="tier-icon" style="background:var(--tier-gold-bg)">🥇</div>
-              <div class="tier-info">
-                <div class="tier-name">Oro</div>
-                <div class="tier-desc">400–799 puntos · Ofertas exclusivas</div>
-              </div>
-              <div class="tier-arrow">›</div>
-            </div>
-            <!-- Diamond - locked -->
-            <div class="tier-item locked" onclick="goTo('benefits','diamond')">
-              <div class="tier-icon" style="background:var(--tier-diamond-bg)">💎</div>
-              <div class="tier-info">
-                <div class="tier-name">Diamante 🔒</div>
-                <div class="tier-desc">800+ puntos · Acceso anticipado</div>
-              </div>
-              <div class="tier-arrow">›</div>
-            </div>
+        <div style="padding:0 16px 12px"><div style="font-size:16px;font-weight:700;color:var(--primary-600);margin-bottom:12px">Niveles</div>
+          <div style="background:#fff;border-radius:14px;border:1px solid var(--neutrals-200);overflow:hidden">
+            <div onclick="go('benefits','bronze')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--neutrals-200);cursor:pointer;opacity:.7"><div style="width:44px;height:44px;border-radius:22px;background:var(--tier-bronze-bg);display:flex;align-items:center;justify-content:center;font-size:22px">🥉</div><div style="flex:1"><div style="font-size:14px;font-weight:700;color:var(--primary-600)">Bronce <span style="color:var(--brand-01)">✓</span></div><div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">0–99 puntos</div></div><div style="color:var(--neutrals-400)">›</div></div>
+            <div onclick="go('benefits','silver')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--neutrals-200);cursor:pointer;background:var(--primary-100);border-left:4px solid var(--brand-01)"><div style="width:44px;height:44px;border-radius:22px;background:var(--tier-silver-bg);display:flex;align-items:center;justify-content:center;font-size:22px">🥈</div><div style="flex:1"><div style="font-size:14px;font-weight:700;color:var(--primary-600)">Plata <span class="badge" style="background:var(--primary-100);color:var(--primary-400)">Actual</span></div><div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">100–399 pts · Cashback prioritario</div></div><div style="color:var(--neutrals-400)">›</div></div>
+            <div onclick="go('benefits','gold')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--neutrals-200);cursor:pointer"><div style="width:44px;height:44px;border-radius:22px;background:var(--tier-gold-bg);display:flex;align-items:center;justify-content:center;font-size:22px">🥇</div><div style="flex:1"><div style="font-size:14px;font-weight:700;color:var(--primary-600)">Oro</div><div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">400–799 pts · Ofertas exclusivas</div></div><div style="color:var(--neutrals-400)">›</div></div>
+            <div onclick="go('benefits','diamond')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;opacity:.5"><div style="width:44px;height:44px;border-radius:22px;background:var(--tier-diamond-bg);display:flex;align-items:center;justify-content:center;font-size:22px">💎</div><div style="flex:1"><div style="font-size:14px;font-weight:700;color:var(--primary-600)">Diamante 🔒</div><div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">800+ pts · Acceso anticipado</div></div><div style="color:var(--neutrals-400)">›</div></div>
           </div>
         </div>
-
-        <!-- CTA -->
-        <div style="padding:0 16px 16px">
-          <button class="gradient-btn" onclick="goTo('history')">
-            <span>Ver historial de puntos</span>
-          </button>
-        </div>
-
-        <!-- How to level up -->
-        <div class="nivel-section">
-          <div class="nivel-section-title">¿Cómo subir de nivel?</div>
-          <div style="display:flex;flex-direction:column;gap:10px">
-            <div style="display:flex;align-items:center;gap:12px;padding:14px;background:var(--neutrals-100);border-radius:14px">
-              <div style="font-size:24px">📷</div>
-              <div><span style="font-size:13px;font-weight:700;color:var(--primary-600)">Sube tickets</span><br><span style="font-size:11px;color:var(--neutrals-500)">+10 pts por cada ticket validado</span></div>
-            </div>
-            <div style="display:flex;align-items:center;gap:12px;padding:14px;background:var(--neutrals-100);border-radius:14px">
-              <div style="font-size:24px">👥</div>
-              <div><span style="font-size:13px;font-weight:700;color:var(--primary-600)">Invita amigos</span><br><span style="font-size:11px;color:var(--neutrals-500)">+50 pts cuando se registran</span></div>
-            </div>
-            <div style="display:flex;align-items:center;gap:12px;padding:14px;background:var(--neutrals-100);border-radius:14px">
-              <div style="font-size:24px">🔥</div>
-              <div><span style="font-size:13px;font-weight:700;color:var(--primary-600)">Mantén tu racha</span><br><span style="font-size:11px;color:var(--neutrals-500)">+25 pts por 7 días seguidos</span></div>
-            </div>
-            <div style="display:flex;align-items:center;gap:12px;padding:14px;background:var(--neutrals-100);border-radius:14px">
-              <div style="font-size:24px">💰</div>
-              <div><span style="font-size:13px;font-weight:700;color:var(--primary-600)">Cobra tu cashback</span><br><span style="font-size:11px;color:var(--neutrals-500)">+15 pts por cada reembolso</span></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Demo button -->
-        <div style="padding:16px">
-          <button class="secondary-btn" onclick="triggerLevelUp()" style="width:100%">
-            ✨ Simular Level Up ✨
-          </button>
-        </div>
+        <div style="padding:0 16px 12px"><button class="grad-btn" onclick="go('history')">Ver historial de puntos</button></div>
+        <div style="padding:0 16px 20px"><button class="sec-btn" onclick="levelUp()">✨ Simular Level Up ✨</button></div>
       </div>
-
-      <nav class="tab-bar">
-        <div class="tab-bar-item" onclick="goBack();switchTab('home')"><svg viewBox="0 0 24 24" fill="none"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z" stroke="currentColor" stroke-width="2"/></svg><span>Inicio</span></div>
-        <div class="tab-bar-item" onclick="switchTab('offers')"><svg viewBox="0 0 24 24" fill="none"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z" stroke="currentColor" stroke-width="2"/><circle cx="7" cy="7" r="1" fill="currentColor"/></svg><span>Ofertas</span></div>
-        <div class="tab-bar-item"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="2"/><path d="M2 8h20" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="14" r="3" stroke="currentColor" stroke-width="2"/></svg><span>Escanear</span></div>
-        <div class="tab-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.27 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z" stroke="currentColor" stroke-width="2"/></svg><span>Premios</span></div>
-        <div class="tab-bar-item active"><svg viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/></svg><span>Perfil</span></div>
-      </nav>
+      <nav class="tab-bar"><div class="tab-item" onclick="root()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/></svg><span>Inicio</span></div><div class="tab-item" onclick="go('wallet')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8h20"/><circle cx="17" cy="14" r="2"/></svg><span>Cartera</span></div><div class="tab-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3"/></svg><span>Escanear</span></div><div class="tab-item" onclick="go('rewards')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.27 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg><span>Premios</span></div><div class="tab-item on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Perfil</span></div></nav>
     </div>
 
-    <!-- ==================== SCREEN: BENEFITS ==================== -->
-    <div class="screen" id="screen-benefits">
-      <div class="benefits-scroll">
-        <div class="inner-header" style="position:sticky;top:0;z-index:10;background:#fff">
-          <div class="back-btn" onclick="goBack()">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19l-7-7 7-7" stroke="var(--primary-600)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <div class="page-title" id="benefitsPageTitle">Beneficios</div>
-        </div>
-
-        <div id="benefitsContent">
-          <!-- Dynamically filled -->
-        </div>
-      </div>
-
-      <nav class="tab-bar">
-        <div class="tab-bar-item" onclick="goBack();goBack();switchTab('home')"><svg viewBox="0 0 24 24" fill="none"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z" stroke="currentColor" stroke-width="2"/></svg><span>Inicio</span></div>
-        <div class="tab-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z" stroke="currentColor" stroke-width="2"/><circle cx="7" cy="7" r="1" fill="currentColor"/></svg><span>Ofertas</span></div>
-        <div class="tab-bar-item"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="2"/><path d="M2 8h20" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="14" r="3" stroke="currentColor" stroke-width="2"/></svg><span>Escanear</span></div>
-        <div class="tab-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.27 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z" stroke="currentColor" stroke-width="2"/></svg><span>Premios</span></div>
-        <div class="tab-bar-item active"><svg viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/></svg><span>Perfil</span></div>
-      </nav>
+    <!-- ===== BENEFITS ===== -->
+    <div class="screen" id="s-benefits">
+      <div class="scroll"><div class="inner-header"><div class="back-btn" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="var(--primary-600)" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div><div class="page-title" id="benTitle">Beneficios</div></div><div id="benContent"></div></div>
+      <nav class="tab-bar"><div class="tab-item" onclick="root()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/></svg><span>Inicio</span></div><div class="tab-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8h20"/><circle cx="17" cy="14" r="2"/></svg><span>Cartera</span></div><div class="tab-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3"/></svg><span>Escanear</span></div><div class="tab-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.27 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg><span>Premios</span></div><div class="tab-item on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Perfil</span></div></nav>
     </div>
 
-    <!-- ==================== SCREEN: HISTORY ==================== -->
-    <div class="screen" id="screen-history">
-      <div class="history-scroll">
-        <div class="inner-header" style="position:sticky;top:0;z-index:10;background:#fff">
-          <div class="back-btn" onclick="goBack()">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19l-7-7 7-7" stroke="var(--primary-600)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <div class="page-title">Historial de Puntos</div>
+    <!-- ===== HISTORY ===== -->
+    <div class="screen" id="s-history">
+      <div class="scroll">
+        <div class="inner-header"><div class="back-btn" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="var(--primary-600)" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div><div class="page-title">Historial de Puntos</div></div>
+        <div style="display:flex;gap:10px;padding:16px">
+          <div style="flex:1;background:#fff;border:1px solid var(--neutrals-200);border-radius:14px;padding:14px;text-align:center"><div style="font-size:24px;font-weight:900;color:var(--brand-01)">247</div><div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">Totales</div></div>
+          <div style="flex:1;background:#fff;border:1px solid var(--neutrals-200);border-radius:14px;padding:14px;text-align:center"><div style="font-size:24px;font-weight:900;color:var(--brand-01)">+35</div><div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">Este mes</div></div>
+          <div style="flex:1;background:#fff;border:1px solid var(--neutrals-200);border-radius:14px;padding:14px;text-align:center"><div style="font-size:24px;font-weight:900">🥈</div><div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">Plata</div></div>
         </div>
-
-        <!-- Summary cards -->
-        <div class="history-summary">
-          <div class="history-stat">
-            <div class="history-stat-value">247</div>
-            <div class="history-stat-label">Puntos totales</div>
-          </div>
-          <div class="history-stat">
-            <div class="history-stat-value">+35</div>
-            <div class="history-stat-label">Este mes</div>
-          </div>
-          <div class="history-stat">
-            <div class="history-stat-value">🥈</div>
-            <div class="history-stat-label">Nivel Plata</div>
-          </div>
-        </div>
-
-        <!-- Expandable months -->
+        <div style="padding:0 16px"><div style="font-size:16px;font-weight:700;color:var(--primary-600);margin-bottom:12px">Actividad</div></div>
         <div style="padding:0 16px">
-          <div style="font-size:var(--fs-h4);font-weight:700;color:var(--primary-600);margin-bottom:12px">Actividad reciente</div>
+          <div style="display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--neutrals-200)"><div style="width:40px;height:40px;border-radius:20px;background:var(--primary-100);display:flex;align-items:center;justify-content:center;font-size:18px">📷</div><div style="flex:1"><div style="font-size:14px;font-weight:600;color:var(--primary-600)">Ticket — Mercadona</div><div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">Hoy</div></div><div style="font-size:14px;font-weight:800;color:var(--brand-01)">+10</div></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--neutrals-200)"><div style="width:40px;height:40px;border-radius:20px;background:#FFF3E0;display:flex;align-items:center;justify-content:center;font-size:18px">🔥</div><div style="flex:1"><div style="font-size:14px;font-weight:600;color:var(--primary-600)">Racha 7 días</div><div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">20 Abr</div></div><div style="font-size:14px;font-weight:800;color:var(--brand-01)">+25</div></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--neutrals-200)"><div style="width:40px;height:40px;border-radius:20px;background:#E8EDFF;display:flex;align-items:center;justify-content:center;font-size:18px">💰</div><div style="flex:1"><div style="font-size:14px;font-weight:600;color:var(--primary-600)">Cashback Bizum</div><div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">15 Abr</div></div><div style="font-size:14px;font-weight:800;color:var(--brand-01)">+15</div></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--neutrals-200)"><div style="width:40px;height:40px;border-radius:20px;background:#F3E8FF;display:flex;align-items:center;justify-content:center;font-size:18px">👥</div><div style="flex:1"><div style="font-size:14px;font-weight:600;color:var(--primary-600)">Amiga referida — Laura</div><div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">8 Abr</div></div><div style="font-size:14px;font-weight:800;color:var(--brand-01)">+50</div></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:14px 0"><div style="width:40px;height:40px;border-radius:20px;background:var(--tier-silver-bg);display:flex;align-items:center;justify-content:center;font-size:18px">🥈</div><div style="flex:1"><div style="font-size:14px;font-weight:800;color:var(--brand-01)">¡Subiste a Plata!</div><div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">22 Mar</div></div><div style="font-size:14px;font-weight:800;color:var(--brand-01)">🎉</div></div>
         </div>
+      </div>
+      <nav class="tab-bar"><div class="tab-item" onclick="root()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/></svg><span>Inicio</span></div><div class="tab-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8h20"/><circle cx="17" cy="14" r="2"/></svg><span>Cartera</span></div><div class="tab-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3"/></svg><span>Escanear</span></div><div class="tab-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.27 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg><span>Premios</span></div><div class="tab-item on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Perfil</span></div></nav>
+    </div>
 
-        <div class="history-list" style="padding:0 16px">
-          <div class="history-item">
-            <div class="history-item-icon" style="background:var(--primary-100)">📷</div>
-            <div class="history-item-info">
-              <div class="history-item-title">Ticket validado — Mercadona</div>
-              <div class="history-item-date">Hoy, 14:32</div>
+    <!-- ===== REWARDS ===== -->
+    <div class="screen" id="s-rewards">
+      <div class="scroll">
+        <div class="inner-header"><div class="back-btn" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="var(--primary-600)" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div><div class="page-title">Premios</div></div>
+        <!-- Points header -->
+        <div style="padding:16px;text-align:center;background:linear-gradient(135deg,var(--primaryAcc2),#fff)">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--neutrals-500);font-weight:600">Tus puntos</div>
+          <div style="font-size:48px;font-weight:900;color:var(--primary-600);margin-top:4px">247</div>
+          <div style="font-size:13px;color:var(--neutrals-500);margin-top:4px">Nivel Plata 🥈</div>
+        </div>
+        <div style="padding:16px"><div style="font-size:16px;font-weight:700;color:var(--primary-600);margin-bottom:12px">Canjea tus puntos</div>
+          <!-- Reward cards -->
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;gap:14px;padding:16px;background:#fff;border:1px solid var(--neutrals-200);border-radius:14px;cursor:pointer">
+              <div style="width:56px;height:56px;border-radius:12px;background:var(--primary-100);display:flex;align-items:center;justify-content:center;font-size:28px">🎁</div>
+              <div style="flex:1"><div style="font-size:14px;font-weight:700;color:var(--primary-600)">Producto P&G gratis</div><div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">Elige entre Fairy, Pantene, Ariel...</div></div>
+              <div style="padding:6px 12px;background:var(--primary-100);border-radius:100px;font-size:12px;font-weight:700;color:var(--primary-400)">500 pts</div>
             </div>
-            <div class="history-item-pts">+10</div>
-          </div>
-          <div class="history-item">
-            <div class="history-item-icon" style="background:var(--primary-100)">📷</div>
-            <div class="history-item-info">
-              <div class="history-item-title">Ticket validado — Carrefour</div>
-              <div class="history-item-date">Ayer, 19:15</div>
+            <div style="display:flex;align-items:center;gap:14px;padding:16px;background:#fff;border:1px solid var(--neutrals-200);border-radius:14px;cursor:pointer">
+              <div style="width:56px;height:56px;border-radius:12px;background:#E8EDFF;display:flex;align-items:center;justify-content:center;font-size:28px">💶</div>
+              <div style="flex:1"><div style="font-size:14px;font-weight:700;color:var(--primary-600)">2€ extra en cartera</div><div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">Se añade directamente a tu saldo</div></div>
+              <div style="padding:6px 12px;background:var(--primary-100);border-radius:100px;font-size:12px;font-weight:700;color:var(--primary-400)">200 pts</div>
             </div>
-            <div class="history-item-pts">+10</div>
-          </div>
-          <div class="history-item">
-            <div class="history-item-icon" style="background:#FFF3E0">🔥</div>
-            <div class="history-item-info">
-              <div class="history-item-title">Racha de 7 días completada</div>
-              <div class="history-item-date">20 Abr 2026</div>
+            <div onclick="toast('🎟️ Participando en sorteo...')" style="display:flex;align-items:center;gap:14px;padding:16px;background:#fff;border:1px solid var(--neutrals-200);border-radius:14px;cursor:pointer">
+              <div style="width:56px;height:56px;border-radius:12px;background:#FFF3E0;display:flex;align-items:center;justify-content:center;font-size:28px">🎰</div>
+              <div style="flex:1"><div style="font-size:14px;font-weight:700;color:var(--primary-600)">Entrada sorteo Braun</div><div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">Afeitadora Series 9 Pro valorada en 300€</div></div>
+              <div style="padding:6px 12px;background:var(--primary-100);border-radius:100px;font-size:12px;font-weight:700;color:var(--primary-400)">100 pts</div>
             </div>
-            <div class="history-item-pts">+25</div>
-          </div>
-          <div class="history-item">
-            <div class="history-item-icon" style="background:var(--primary-100)">📷</div>
-            <div class="history-item-info">
-              <div class="history-item-title">Ticket validado — Lidl</div>
-              <div class="history-item-date">18 Abr 2026</div>
+            <div style="display:flex;align-items:center;gap:14px;padding:16px;background:#fff;border:1px solid var(--neutrals-200);border-radius:14px;cursor:pointer">
+              <div style="width:56px;height:56px;border-radius:12px;background:#F3E8FF;display:flex;align-items:center;justify-content:center;font-size:28px">⚡</div>
+              <div style="flex:1"><div style="font-size:14px;font-weight:700;color:var(--primary-600)">Doble puntos 24h</div><div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">Activa x2 puntos durante un día</div></div>
+              <div style="padding:6px 12px;background:var(--primary-100);border-radius:100px;font-size:12px;font-weight:700;color:var(--primary-400)">150 pts</div>
             </div>
-            <div class="history-item-pts">+10</div>
-          </div>
-          <div class="history-item">
-            <div class="history-item-icon" style="background:#E8EDFF">💰</div>
-            <div class="history-item-info">
-              <div class="history-item-title">Cashback cobrado — Bizum</div>
-              <div class="history-item-date">15 Abr 2026</div>
+            <div style="display:flex;align-items:center;gap:14px;padding:16px;background:#fff;border:1px solid var(--neutrals-200);border-radius:14px;cursor:pointer;opacity:.5">
+              <div style="width:56px;height:56px;border-radius:12px;background:var(--tier-gold-bg);display:flex;align-items:center;justify-content:center;font-size:28px">👑</div>
+              <div style="flex:1"><div style="font-size:14px;font-weight:700;color:var(--neutrals-400)">Experiencia VIP P&G</div><div style="font-size:11px;color:var(--neutrals-400);margin-top:2px">🔒 Solo nivel Oro+</div></div>
+              <div style="padding:6px 12px;background:var(--neutrals-200);border-radius:100px;font-size:12px;font-weight:700;color:var(--neutrals-400)">1000 pts</div>
             </div>
-            <div class="history-item-pts">+15</div>
-          </div>
-          <div class="history-item">
-            <div class="history-item-icon" style="background:var(--primary-100)">📷</div>
-            <div class="history-item-info">
-              <div class="history-item-title">Ticket validado — Mercadona</div>
-              <div class="history-item-date">12 Abr 2026</div>
-            </div>
-            <div class="history-item-pts">+10</div>
-          </div>
-          <div class="history-item">
-            <div class="history-item-icon" style="background:#F3E8FF">👥</div>
-            <div class="history-item-info">
-              <div class="history-item-title">Amiga referida — Laura M.</div>
-              <div class="history-item-date">8 Abr 2026</div>
-            </div>
-            <div class="history-item-pts">+50</div>
-          </div>
-          <div class="history-item">
-            <div class="history-item-icon" style="background:var(--primary-100)">📷</div>
-            <div class="history-item-info">
-              <div class="history-item-title">Ticket validado — DIA</div>
-              <div class="history-item-date">5 Abr 2026</div>
-            </div>
-            <div class="history-item-pts">+10</div>
-          </div>
-          <div class="history-item">
-            <div class="history-item-icon" style="background:#FFF3E0">🔥</div>
-            <div class="history-item-info">
-              <div class="history-item-title">Racha de 7 días completada</div>
-              <div class="history-item-date">2 Abr 2026</div>
-            </div>
-            <div class="history-item-pts">+25</div>
-          </div>
-          <div class="history-item">
-            <div class="history-item-icon" style="background:var(--tier-silver-bg)">🥈</div>
-            <div class="history-item-info">
-              <div class="history-item-title" style="color:var(--brand-01);font-weight:800">¡Subiste a Plata!</div>
-              <div class="history-item-date">22 Mar 2026</div>
-            </div>
-            <div class="history-item-pts" style="color:var(--brand-01)">🎉</div>
           </div>
         </div>
       </div>
+      <nav class="tab-bar"><div class="tab-item" onclick="root()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/></svg><span>Inicio</span></div><div class="tab-item" onclick="go('wallet')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8h20"/><circle cx="17" cy="14" r="2"/></svg><span>Cartera</span></div><div class="tab-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3"/></svg><span>Escanear</span></div><div class="tab-item on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.27 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg><span>Premios</span></div><div class="tab-item" onclick="go('nivel')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Perfil</span></div></nav>
+    </div>
 
-      <nav class="tab-bar">
-        <div class="tab-bar-item" onclick="goToRoot()"><svg viewBox="0 0 24 24" fill="none"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z" stroke="currentColor" stroke-width="2"/></svg><span>Inicio</span></div>
-        <div class="tab-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z" stroke="currentColor" stroke-width="2"/><circle cx="7" cy="7" r="1" fill="currentColor"/></svg><span>Ofertas</span></div>
-        <div class="tab-bar-item"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="2"/><path d="M2 8h20" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="14" r="3" stroke="currentColor" stroke-width="2"/></svg><span>Escanear</span></div>
-        <div class="tab-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.27 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z" stroke="currentColor" stroke-width="2"/></svg><span>Premios</span></div>
-        <div class="tab-bar-item active"><svg viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/></svg><span>Perfil</span></div>
-      </nav>
+    <!-- ===== MGM / INVITE ===== -->
+    <div class="screen" id="s-mgm">
+      <div class="scroll">
+        <div class="inner-header"><div class="back-btn" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="var(--primary-600)" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div><div class="page-title">Invita y Gana</div></div>
+        <!-- Hero -->
+        <div style="padding:24px 16px;text-align:center;background:linear-gradient(135deg,#E8EDFF,#fff)">
+          <div style="font-size:56px;margin-bottom:8px">🎉</div>
+          <div style="font-size:24px;font-weight:900;color:var(--primary-600)">Gana 5€ por amigo</div>
+          <div style="font-size:14px;color:var(--neutrals-500);margin-top:8px;line-height:21px">Invita a tus amigos a La Cuponera.<br>Cuando se registren y suban su primer ticket,<br><strong>¡ambos ganáis 5€!</strong></div>
+        </div>
+        <!-- How it works -->
+        <div style="padding:20px 16px">
+          <div style="font-size:16px;font-weight:700;color:var(--primary-600);margin-bottom:16px">¿Cómo funciona?</div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;gap:14px;align-items:flex-start"><div style="width:36px;height:36px;border-radius:18px;background:var(--brand-02);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:16px;flex-shrink:0">1</div><div><div style="font-size:14px;font-weight:700;color:var(--primary-600)">Comparte tu link</div><div style="font-size:12px;color:var(--neutrals-500);margin-top:2px">Envíalo por WhatsApp, email o redes sociales</div></div></div>
+            <div style="display:flex;gap:14px;align-items:flex-start"><div style="width:36px;height:36px;border-radius:18px;background:var(--brand-02);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:16px;flex-shrink:0">2</div><div><div style="font-size:14px;font-weight:700;color:var(--primary-600)">Tu amigo se registra</div><div style="font-size:12px;color:var(--neutrals-500);margin-top:2px">Descarga la app y crea su cuenta</div></div></div>
+            <div style="display:flex;gap:14px;align-items:flex-start"><div style="width:36px;height:36px;border-radius:18px;background:var(--brand-02);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:16px;flex-shrink:0">3</div><div><div style="font-size:14px;font-weight:700;color:var(--primary-600)">Sube su primer ticket</div><div style="font-size:12px;color:var(--neutrals-500);margin-top:2px">Compra un producto P&G y lo escanea</div></div></div>
+            <div style="display:flex;gap:14px;align-items:flex-start"><div style="width:36px;height:36px;border-radius:18px;background:var(--brand-01);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:16px;flex-shrink:0">🎁</div><div><div style="font-size:14px;font-weight:700;color:var(--brand-01)">¡Ganáis ambos 5€!</div><div style="font-size:12px;color:var(--neutrals-500);margin-top:2px">Se añaden directamente a vuestra cartera</div></div></div>
+          </div>
+        </div>
+        <!-- Referral link -->
+        <div style="padding:0 16px 16px">
+          <div style="background:var(--neutrals-100);border:2px dashed var(--neutrals-300);border-radius:14px;padding:16px;text-align:center">
+            <div style="font-size:11px;font-weight:600;color:var(--neutrals-500);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Tu link personal</div>
+            <div style="font-size:14px;font-weight:700;color:var(--brand-02);word-break:break-all">lacuponera.es/invite/maria-g247</div>
+          </div>
+        </div>
+        <div style="padding:0 16px 12px"><button class="grad-btn" onclick="toast('📤 Link copiado al portapapeles')">📤 Compartir link</button></div>
+        <div style="padding:0 16px 12px"><button class="sec-btn" onclick="toast('📱 Abriendo WhatsApp...')">💬 Compartir por WhatsApp</button></div>
+        <!-- Stats -->
+        <div style="padding:16px">
+          <div style="font-size:16px;font-weight:700;color:var(--primary-600);margin-bottom:12px">Tus referidos</div>
+          <div style="display:flex;gap:10px;margin-bottom:16px">
+            <div style="flex:1;text-align:center;padding:14px;background:var(--primary-100);border-radius:14px"><div style="font-size:24px;font-weight:900;color:var(--primary-400)">3</div><div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">Amigos invitados</div></div>
+            <div style="flex:1;text-align:center;padding:14px;background:#E8EDFF;border-radius:14px"><div style="font-size:24px;font-weight:900;color:var(--brand-02)">15€</div><div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">Ganados</div></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:1px;background:var(--neutrals-200);border-radius:14px;overflow:hidden">
+            <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:#fff"><div style="width:36px;height:36px;border-radius:18px;background:var(--primary-200);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--primary-400)">LM</div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--primary-600)">Laura M.</div><div style="font-size:11px;color:var(--neutrals-500)">Se unió 8 Abr</div></div><div style="font-size:12px;font-weight:700;color:var(--brand-01)">+5€ ✓</div></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:#fff"><div style="width:36px;height:36px;border-radius:18px;background:var(--primary-200);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--primary-400)">CP</div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--primary-600)">Carlos P.</div><div style="font-size:11px;color:var(--neutrals-500)">Se unió 22 Mar</div></div><div style="font-size:12px;font-weight:700;color:var(--brand-01)">+5€ ✓</div></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:#fff"><div style="width:36px;height:36px;border-radius:18px;background:var(--primary-200);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--primary-400)">AR</div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--primary-600)">Ana R.</div><div style="font-size:11px;color:var(--neutrals-500)">Se unió 15 Mar</div></div><div style="font-size:12px;font-weight:700;color:var(--brand-01)">+5€ ✓</div></div>
+          </div>
+        </div>
+      </div>
+      <nav class="tab-bar"><div class="tab-item" onclick="root()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/></svg><span>Inicio</span></div><div class="tab-item" onclick="go('wallet')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8h20"/><circle cx="17" cy="14" r="2"/></svg><span>Cartera</span></div><div class="tab-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3"/></svg><span>Escanear</span></div><div class="tab-item" onclick="go('rewards')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.27 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg><span>Premios</span></div><div class="tab-item on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Perfil</span></div></nav>
+    </div>
+
+    <!-- ===== CASHOUT (Bizum) ===== -->
+    <div class="screen" id="s-cashout">
+      <div class="scroll" id="cashoutScroll">
+        <div class="inner-header"><div class="back-btn" onclick="back()"><svg viewBox="0 0 24 24" fill="none" stroke="var(--primary-600)" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div><div class="page-title">Pedir reembolso</div></div>
+        <!-- Method selection -->
+        <div id="cashoutStep1" style="padding:16px">
+          <div style="font-size:16px;font-weight:700;color:var(--primary-600);margin-bottom:4px">¿Cómo quieres cobrar?</div>
+          <div style="font-size:13px;color:var(--neutrals-500);margin-bottom:20px">Saldo disponible: <strong>7,70€</strong></div>
+          <div id="optBizum" onclick="selMethod('bizum')" style="display:flex;align-items:center;padding:16px;border:2px solid var(--brand-01);border-radius:14px;cursor:pointer;gap:14px;margin-bottom:10px;background:var(--primary-100);position:relative">
+            <div style="position:absolute;top:-10px;right:12px;background:var(--secondary-01);padding:2px 10px;border-radius:12px;font-size:9px;font-weight:700;color:var(--primary-600)">⚡ Instantáneo</div>
+            <div style="width:44px;height:44px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="28" height="28"><path d="M13.6 4.2L7.3 12h4.2l-1.1 7.8L16.7 12h-4.2l1.1-7.8z" fill="var(--brand-02)"/></svg></div>
+            <div style="flex:1"><div style="font-size:14px;font-weight:700;color:var(--primary-600)">Bizum</div><div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">Recibe al instante en tu móvil</div></div>
+            <div style="width:22px;height:22px;border-radius:11px;border:2px solid var(--brand-01);display:flex;align-items:center;justify-content:center"><div style="width:12px;height:12px;border-radius:6px;background:var(--brand-01)"></div></div>
+          </div>
+          <div id="optBank" onclick="selMethod('bank')" style="display:flex;align-items:center;padding:16px;border:2px solid var(--neutrals-200);border-radius:14px;cursor:pointer;gap:14px;margin-bottom:24px">
+            <div style="width:44px;height:44px;border-radius:12px;background:var(--neutrals-100);display:flex;align-items:center;justify-content:center;font-size:22px">🏦</div>
+            <div style="flex:1"><div style="font-size:14px;font-weight:700;color:var(--primary-600)">Cuenta bancaria</div><div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">Transferencia en 2-3 días</div></div>
+            <div style="width:22px;height:22px;border-radius:11px;border:2px solid var(--neutrals-300);display:flex;align-items:center;justify-content:center"><div style="width:12px;height:12px;border-radius:6px;background:transparent"></div></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10z" stroke="var(--brand-01)" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="var(--brand-01)" stroke-width="2" stroke-linecap="round"/></svg><span style="font-size:14px;color:var(--primary-600)">Te reembolsamos <strong>7,70€</strong></span></div>
+          <button class="grad-btn" onclick="processCashout()">Confirmar reembolso</button>
+          <div style="text-align:center;margin-top:12px;font-size:11px;color:var(--neutrals-500)">+15 puntos por cobrar tu cashback ⭐</div>
+        </div>
+        <!-- Processing -->
+        <div id="cashoutStep2" style="display:none;padding:60px 16px;text-align:center">
+          <div class="proc-spin"></div>
+          <div style="font-size:19px;font-weight:700;color:var(--primary-600)">Procesando tu Bizum...</div>
+          <div style="font-size:14px;color:var(--neutrals-500);margin-top:8px">Esto solo tarda unos segundos</div>
+        </div>
+        <!-- Success -->
+        <div id="cashoutStep3" style="display:none;padding:60px 16px;text-align:center">
+          <div class="suc-check"><svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="var(--brand-01)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div style="font-size:24px;font-weight:900;color:var(--primary-600)">¡Listo! 🎉</div>
+          <div style="font-size:14px;color:var(--neutrals-500);margin-top:8px;line-height:21px">Hemos enviado <strong>7,70€</strong> a tu Bizum.<br>Revisa tu teléfono.</div>
+          <div style="margin-top:24px;padding:16px;background:var(--primary-100);border-radius:14px"><div style="font-size:13px;font-weight:700;color:var(--primary-400)">+15 puntos ganados ⭐</div></div>
+          <div style="margin-top:24px"><button class="grad-btn" onclick="root()">Volver al inicio</button></div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- ========== LEVEL UP OVERLAY ========== -->
-  <div class="levelup-overlay" id="levelupOverlay" onclick="closeLevelUp()">
-    <div class="levelup-card" onclick="event.stopPropagation()">
-      <div class="levelup-icon">🥇</div>
-      <div class="levelup-title">¡Has subido de nivel!</div>
-      <div class="levelup-subtitle">Enhorabuena María, ahora eres parte de los Cuponeros más activos</div>
-      <div class="levelup-new-badge">🥇 Cuponera Oro</div>
-      <button class="gradient-btn" onclick="closeLevelUp()" style="margin-top:8px">¡Genial!</button>
+  <!-- Level Up Overlay -->
+  <div class="lu-overlay" id="luOverlay" onclick="closeLU()">
+    <div class="lu-card" onclick="event.stopPropagation()">
+      <div style="font-size:64px;animation:bounce 1s ease infinite">🥇</div>
+      <div style="font-size:24px;font-weight:900;color:var(--primary-600);margin:16px 0 8px">¡Has subido de nivel!</div>
+      <div style="font-size:14px;color:var(--neutrals-500);line-height:21px;margin-bottom:20px">Enhorabuena María, ahora eres parte de los Cuponeros más activos</div>
+      <div style="display:inline-flex;align-items:center;gap:6px;background:var(--tier-gold-bg);border:2px solid var(--tier-gold);border-radius:100px;padding:8px 20px;font-size:16px;font-weight:800;color:var(--primary-600);margin-bottom:20px">🥇 Cuponera Oro</div>
+      <div><button class="grad-btn" onclick="closeLU()">¡Genial!</button></div>
     </div>
   </div>
-
-  <!-- Confetti container -->
-  <div class="confetti-container" id="confettiContainer"></div>
-
-  <!-- Toast -->
-  <div class="toast" id="toast"></div>
+  <div class="confetti-container" id="confCont"></div>
+  <div class="toast" id="toastEl"></div>
 </div>
 
 <script>
-// ===== NAVIGATION =====
-const navStack = ['home'];
-
-function goTo(screenId, data) {
-  const current = document.querySelector('.screen.active');
-  const target = document.getElementById('screen-' + screenId);
-  if (!target || current === target) return;
-
-  // Special handling for benefits
-  if (screenId === 'benefits' && data) renderBenefits(data);
-
-  // Animate
-  current.classList.remove('active');
-  current.classList.add('slide-out-left');
-  target.classList.add('slide-in');
-  target.classList.add('active');
-  
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      target.classList.remove('slide-in');
-      target.classList.add('entering');
-      setTimeout(() => {
-        current.classList.remove('slide-out-left');
-        target.classList.remove('entering');
-      }, 350);
-    });
-  });
-
-  navStack.push(screenId);
-  
-  // Animate progress bars
-  if (screenId === 'nivel') {
-    setTimeout(() => {
-      document.getElementById('tierProgressBar').style.width = '62%';
-    }, 200);
-  }
+const stk=['home'];let curMethod='bizum';
+function go(id,data){
+  const cur=document.querySelector('.screen.active'),tgt=document.getElementById('s-'+id);
+  if(!tgt||cur===tgt)return;
+  if(id==='benefits'&&data)renderBen(data);
+  cur.classList.remove('active');cur.style.transform='translateX(-30%)';cur.style.opacity='.5';
+  tgt.style.transform='translateX(100%)';tgt.classList.add('active');
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{tgt.style.transform='translateX(0)';tgt.style.opacity='1';setTimeout(()=>{cur.style.transform='';cur.style.opacity=''},350)}));
+  stk.push(id);
+  if(id==='nivel')setTimeout(()=>{document.getElementById('tierProg').style.width='62%'},200);
 }
-
-function goBack() {
-  if (navStack.length <= 1) return;
-  navStack.pop();
-  const targetId = navStack[navStack.length - 1];
-  const current = document.querySelector('.screen.active');
-  const target = document.getElementById('screen-' + targetId);
-  if (!target) return;
-
-  current.classList.remove('active');
-  current.style.transform = 'translateX(100%)';
-  current.style.opacity = '0';
-  target.classList.add('active');
-  target.style.transform = 'translateX(0)';
-  target.style.opacity = '1';
-  
-  setTimeout(() => {
-    current.style.transform = '';
-    current.style.opacity = '';
-    target.style.transform = '';
-  }, 350);
+function back(){
+  if(stk.length<=1)return;stk.pop();
+  const tid=stk[stk.length-1],cur=document.querySelector('.screen.active'),tgt=document.getElementById('s-'+tid);
+  if(!tgt)return;
+  cur.classList.remove('active');cur.style.transform='translateX(100%)';cur.style.opacity='0';
+  tgt.classList.add('active');tgt.style.transform='translateX(0)';tgt.style.opacity='1';
+  setTimeout(()=>{cur.style.transform='';cur.style.opacity=''},350);
 }
-
-function goToRoot() {
-  navStack.length = 0;
-  navStack.push('home');
-  document.querySelectorAll('.screen').forEach(s => {
-    s.classList.remove('active','slide-in','slide-out-left','entering');
-    s.style.transform = '';
-    s.style.opacity = '';
-  });
-  document.getElementById('screen-home').classList.add('active');
+function root(){stk.length=0;stk.push('home');document.querySelectorAll('.screen').forEach(s=>{s.classList.remove('active');s.style.transform='';s.style.opacity=''});document.getElementById('s-home').classList.add('active')}
+function tab(t){root()}
+function openCashout(){
+  document.getElementById('cashoutStep1').style.display='';
+  document.getElementById('cashoutStep2').style.display='none';
+  document.getElementById('cashoutStep3').style.display='none';
+  go('cashout');
 }
-
-function switchTab(tabId) {
-  goToRoot();
-  // Could navigate to different tab screens - for now just home
-  showToast('Próximamente 🚀');
+function selMethod(m){
+  curMethod=m;
+  const b=document.getElementById('optBizum'),k=document.getElementById('optBank');
+  if(m==='bizum'){b.style.borderColor='var(--brand-01)';b.style.background='var(--primary-100)';k.style.borderColor='var(--neutrals-200)';k.style.background='#fff';b.querySelector('div:last-child div').style.background='var(--brand-01)';k.querySelector('div:last-child div').style.background='transparent'}
+  else{k.style.borderColor='var(--brand-01)';k.style.background='var(--primary-100)';b.style.borderColor='var(--neutrals-200)';b.style.background='#fff';k.querySelector('div:last-child div').style.background='var(--brand-01)';b.querySelector('div:last-child div').style.background='transparent'}
 }
-
-// ===== BENEFITS RENDERING =====
-const tierData = {
-  bronze: {
-    icon: '🥉', name: 'Bronce', range: '0–99 puntos', bg: 'var(--tier-bronze-bg)', color: 'var(--tier-bronze)',
-    benefits: [
-      { icon: '✅', title: 'Acceso a todas las ofertas', desc: 'Ofertas generales disponibles', unlocked: true },
-      { icon: '✅', title: 'Cashback estándar', desc: 'Procesado en 48-72h', unlocked: true },
-      { icon: '✅', title: 'Soporte por email', desc: 'Respuesta en 24h', unlocked: true },
-    ]
-  },
-  silver: {
-    icon: '🥈', name: 'Plata', range: '100–399 puntos', bg: 'var(--tier-silver-bg)', color: 'var(--tier-silver)',
-    benefits: [
-      { icon: '✅', title: 'Todo de Bronce', desc: 'Todos los beneficios anteriores', unlocked: true },
-      { icon: '✅', title: 'Cashback prioritario', desc: 'Procesado en 24h', unlocked: true },
-      { icon: '✅', title: 'Ofertas exclusivas Plata', desc: 'Descuentos especiales cada mes', unlocked: true },
-      { icon: '✅', title: 'Sorteos premium', desc: 'Participa en sorteos exclusivos', unlocked: true },
-      { icon: '🔒', title: 'Doble puntos', desc: 'Disponible desde Oro', unlocked: false },
-      { icon: '🔒', title: 'Acceso anticipado', desc: 'Disponible desde Diamante', unlocked: false },
-    ]
-  },
-  gold: {
-    icon: '🥇', name: 'Oro', range: '400–799 puntos', bg: 'var(--tier-gold-bg)', color: 'var(--tier-gold)',
-    benefits: [
-      { icon: '✅', title: 'Todo de Plata', desc: 'Todos los beneficios anteriores', unlocked: true },
-      { icon: '✅', title: 'Doble puntos', desc: '2x puntos en todos los tickets', unlocked: true },
-      { icon: '✅', title: 'Cashback express', desc: 'Procesado mismo día', unlocked: true },
-      { icon: '✅', title: 'Ofertas exclusivas Oro', desc: 'Los mejores descuentos de P&G', unlocked: true },
-      { icon: '✅', title: 'Canal VIP WhatsApp', desc: 'Soporte directo por WhatsApp', unlocked: true },
-      { icon: '🔒', title: 'Acceso anticipado', desc: 'Disponible desde Diamante', unlocked: false },
-    ]
-  },
-  diamond: {
-    icon: '💎', name: 'Diamante', range: '800+ puntos', bg: 'var(--tier-diamond-bg)', color: 'var(--tier-diamond)',
-    benefits: [
-      { icon: '✅', title: 'Todo de Oro', desc: 'Todos los beneficios anteriores', unlocked: true },
-      { icon: '✅', title: 'Acceso anticipado', desc: 'Ve ofertas 48h antes que nadie', unlocked: true },
-      { icon: '✅', title: 'Triple puntos', desc: '3x puntos en todos los tickets', unlocked: true },
-      { icon: '✅', title: 'Regalos exclusivos', desc: 'Productos P&G gratis cada trimestre', unlocked: true },
-      { icon: '✅', title: 'Eventos VIP', desc: 'Invitación a eventos exclusivos P&G', unlocked: true },
-      { icon: '✅', title: 'Soporte premium', desc: 'Línea directa de atención', unlocked: true },
-    ]
-  }
-};
-
-function renderBenefits(tierId) {
-  const tier = tierData[tierId];
-  if (!tier) return;
-  
-  document.getElementById('benefitsPageTitle').textContent = 'Nivel ' + tier.name;
-  
-  let html = `
-    <div class="benefit-tier-header" style="background:${tier.bg}">
-      <div class="benefit-tier-icon">${tier.icon}</div>
-      <div class="benefit-tier-name">Cuponera ${tier.name}</div>
-      <div class="benefit-tier-range">${tier.range}</div>
-    </div>
-    <div style="padding:16px">
-      <div style="font-size:var(--fs-h4);font-weight:700;color:var(--primary-600);margin-bottom:4px">Beneficios incluidos</div>
-    </div>
-    <div class="benefits-list">
-  `;
-  
-  tier.benefits.forEach(b => {
-    html += `
-      <div class="benefit-item">
-        <div class="benefit-icon ${b.unlocked ? 'unlocked' : 'locked'}">${b.icon}</div>
-        <div class="benefit-text">
-          <div class="benefit-title ${b.unlocked ? '' : 'locked'}">${b.title}</div>
-          <div class="benefit-desc">${b.desc}</div>
-        </div>
-      </div>
-    `;
-  });
-  
-  html += '</div>';
-  document.getElementById('benefitsContent').innerHTML = html;
+function processCashout(){
+  document.getElementById('cashoutStep1').style.display='none';
+  document.getElementById('cashoutStep2').style.display='';
+  setTimeout(()=>{document.getElementById('cashoutStep2').style.display='none';document.getElementById('cashoutStep3').style.display='';confetti()},2200);
 }
-
-// ===== LEVEL UP =====
-function triggerLevelUp() {
-  document.getElementById('levelupOverlay').classList.add('active');
-  spawnConfetti();
-  if (navigator.vibrate) navigator.vibrate([100, 50, 200]);
+// Benefits
+const tiers={bronze:{icon:'🥉',name:'Bronce',range:'0–99 pts',bg:'var(--tier-bronze-bg)',b:[{i:'✅',t:'Acceso a ofertas',d:'Ofertas generales',u:1},{i:'✅',t:'Cashback estándar',d:'Procesado 48-72h',u:1},{i:'✅',t:'Soporte email',d:'Respuesta 24h',u:1}]},silver:{icon:'🥈',name:'Plata',range:'100–399 pts',bg:'var(--tier-silver-bg)',b:[{i:'✅',t:'Todo de Bronce',d:'Beneficios anteriores',u:1},{i:'✅',t:'Cashback prioritario',d:'Procesado 24h',u:1},{i:'✅',t:'Ofertas Plata',d:'Descuentos exclusivos',u:1},{i:'✅',t:'Sorteos premium',d:'Participación exclusiva',u:1},{i:'🔒',t:'Doble puntos',d:'Desde Oro',u:0},{i:'🔒',t:'Acceso anticipado',d:'Desde Diamante',u:0}]},gold:{icon:'🥇',name:'Oro',range:'400–799 pts',bg:'var(--tier-gold-bg)',b:[{i:'✅',t:'Todo de Plata',d:'Beneficios anteriores',u:1},{i:'✅',t:'Doble puntos',d:'2x en todos los tickets',u:1},{i:'✅',t:'Cashback express',d:'Mismo día',u:1},{i:'✅',t:'Ofertas Oro',d:'Los mejores descuentos',u:1},{i:'✅',t:'WhatsApp VIP',d:'Soporte directo',u:1}]},diamond:{icon:'💎',name:'Diamante',range:'800+ pts',bg:'var(--tier-diamond-bg)',b:[{i:'✅',t:'Todo de Oro',d:'Beneficios anteriores',u:1},{i:'✅',t:'Acceso anticipado',d:'48h antes que nadie',u:1},{i:'✅',t:'Triple puntos',d:'3x en todos los tickets',u:1},{i:'✅',t:'Regalos P&G',d:'Gratis cada trimestre',u:1},{i:'✅',t:'Eventos VIP',d:'Invitación exclusiva',u:1}]}};
+function renderBen(id){
+  const t=tiers[id];if(!t)return;
+  document.getElementById('benTitle').textContent='Nivel '+t.name;
+  let h=`<div style="padding:20px 16px;text-align:center;background:${t.bg}"><div style="font-size:48px;margin-bottom:8px">${t.icon}</div><div style="font-size:24px;font-weight:900;color:var(--primary-600)">Cuponera ${t.name}</div><div style="font-size:14px;color:var(--neutrals-500);margin-top:4px">${t.range}</div></div><div style="padding:16px"><div style="font-size:16px;font-weight:700;color:var(--primary-600);margin-bottom:4px">Beneficios</div></div><div style="padding:0 16px">`;
+  t.b.forEach(b=>{h+=`<div style="display:flex;align-items:flex-start;gap:12px;padding:14px 0;border-bottom:1px solid var(--neutrals-200)"><div style="width:36px;height:36px;border-radius:18px;background:${b.u?'var(--primary-100)':'var(--neutrals-200)'};display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">${b.i}</div><div style="flex:1"><div style="font-size:14px;font-weight:700;color:${b.u?'var(--primary-600)':'var(--neutrals-400)'}">${b.t}</div><div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">${b.d}</div></div></div>`});
+  h+='</div>';document.getElementById('benContent').innerHTML=h;
 }
-
-function closeLevelUp() {
-  document.getElementById('levelupOverlay').classList.remove('active');
-  document.getElementById('confettiContainer').innerHTML = '';
-}
-
-function spawnConfetti() {
-  const container = document.getElementById('confettiContainer');
-  container.innerHTML = '';
-  const colors = ['#5EBC82','#2A43D8','#FAD91E','#FF552A','#C3F8D8','#FFD700','#B9F2FF'];
-  for (let i = 0; i < 60; i++) {
-    const piece = document.createElement('div');
-    piece.className = 'confetti-piece';
-    piece.style.left = Math.random() * 100 + '%';
-    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-    piece.style.animationDelay = Math.random() * 1.5 + 's';
-    piece.style.animationDuration = (2 + Math.random() * 2) + 's';
-    piece.style.width = (6 + Math.random() * 6) + 'px';
-    piece.style.height = (10 + Math.random() * 8) + 'px';
-    container.appendChild(piece);
-  }
-}
-
-// ===== TOAST =====
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2000);
-}
-
-// ===== TIME =====
-function updateTime() {
-  const now = new Date();
-  const h = now.getHours().toString().padStart(2,'0');
-  const m = now.getMinutes().toString().padStart(2,'0');
-  document.getElementById('statusTime').textContent = h + ':' + m;
-}
-updateTime();
-setInterval(updateTime, 30000);
+// Level up
+function levelUp(){document.getElementById('luOverlay').classList.add('active');confetti();if(navigator.vibrate)navigator.vibrate([100,50,200])}
+function closeLU(){document.getElementById('luOverlay').classList.remove('active');document.getElementById('confCont').innerHTML=''}
+function confetti(){const c=document.getElementById('confCont');c.innerHTML='';const cols=['#5EBC82','#2A43D8','#FAD91E','#FF552A','#C3F8D8','#FFD700','#B9F2FF'];for(let i=0;i<60;i++){const p=document.createElement('div');p.className='confetti-piece';p.style.left=Math.random()*100+'%';p.style.background=cols[Math.floor(Math.random()*cols.length)];p.style.animationDelay=Math.random()*1.5+'s';p.style.animationDuration=(2+Math.random()*2)+'s';p.style.width=(6+Math.random()*6)+'px';p.style.height=(10+Math.random()*8)+'px';c.appendChild(p)}}
+function toast(m){const t=document.getElementById('toastEl');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000)}
+// Retailer chips
+document.querySelectorAll('.retailer-chip').forEach(c=>c.addEventListener('click',()=>{document.querySelectorAll('.retailer-chip').forEach(x=>x.classList.remove('sel'));c.classList.add('sel');toast('🏪 '+c.querySelector('span').textContent)}));
+// Time
+function uT(){const n=new Date();document.getElementById('sTime').textContent=n.getHours().toString().padStart(2,'0')+':'+n.getMinutes().toString().padStart(2,'0')}uT();setInterval(uT,30000);
 </script>
 </body>
 </html>
