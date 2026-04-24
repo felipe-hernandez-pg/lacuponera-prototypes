@@ -502,7 +502,7 @@ function uT(){const n=new Date();document.getElementById('sTime').textContent=n.
 // Fullscreen
 function launchFS(){const s=document.getElementById('fsSplash');const el=document.documentElement;if(el.requestFullscreen)el.requestFullscreen().catch(()=>{});else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();s.classList.add('hidden');setTimeout(()=>s.style.display='none',500)}
 // Service Worker
-if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').then(r=>{r.addEventListener('updatefound',()=>{const w=r.installing;w.addEventListener('statechange',()=>{if(w.state==='activated')location.reload()})})}).catch(()=>{})}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js?v=38').then(r=>{r.update();r.addEventListener('updatefound',()=>{const w=r.installing;w.addEventListener('statechange',()=>{if(w.state==='activated')location.reload()})})}).catch(()=>{})}
 </script>
 </body>
 </html>

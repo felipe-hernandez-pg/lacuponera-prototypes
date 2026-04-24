@@ -1,5 +1,4 @@
-const CACHE_NAME = 'lc-v37';
-
+// v38 — no-cache SW: delete all caches, never store anything
 self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', e => {
   e.waitUntil(
@@ -9,15 +8,7 @@ self.addEventListener('activate', e => {
   );
 });
 
-// Network-first: always try fresh, fall back to cache if offline
+// Always go to network, never cache
 self.addEventListener('fetch', e => {
-  e.respondWith(
-    fetch(e.request)
-      .then(res => {
-        const clone = res.clone();
-        caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
-        return res;
-      })
-      .catch(() => caches.match(e.request))
-  );
+  e.respondWith(fetch(e.request));
 });
