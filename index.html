@@ -406,12 +406,12 @@ body{font-family:'Montserrat',system-ui,-apple-system,sans-serif;background:#000
         <div style="padding:16px">
           <div style="font-size:14px;font-weight:700;color:var(--primary-600);margin-bottom:12px">Premios posibles</div>
           <div style="display:flex;flex-direction:column;gap:8px">
-            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--neutrals-100);border-radius:10px"><span style="font-size:20px">⭐</span><span style="font-size:13px;font-weight:600;color:var(--primary-600)">+25 Puntos</span></div>
-            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--neutrals-100);border-radius:10px"><span style="font-size:20px">🌟</span><span style="font-size:13px;font-weight:600;color:var(--primary-600)">+50 Puntos</span></div>
-            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--neutrals-100);border-radius:10px"><span style="font-size:20px">💰</span><span style="font-size:13px;font-weight:600;color:var(--primary-600)">+1€ Cashback</span></div>
-            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--neutrals-100);border-radius:10px"><span style="font-size:20px">🎁</span><span style="font-size:13px;font-weight:600;color:var(--primary-600)">Premio sorpresa</span></div>
-            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:linear-gradient(135deg,#FFF8E1,#FFECB3);border-radius:10px"><span style="font-size:20px">💎</span><span style="font-size:13px;font-weight:700;color:#FF6F00">+100 Puntos (raro)</span></div>
-            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--neutrals-100);border-radius:10px"><span style="font-size:20px">🔄</span><span style="font-size:13px;font-weight:600;color:var(--primary-600)">Tirada extra</span></div>
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--neutrals-100);border-radius:10px"><span style="font-size:20px">🧴</span><span style="font-size:13px;font-weight:600;color:var(--primary-600)">Fairy Original gratis</span></div>
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--neutrals-100);border-radius:10px"><span style="font-size:20px">💰</span><span style="font-size:13px;font-weight:600;color:var(--primary-600)">Cupón 3€ descuento</span></div>
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--neutrals-100);border-radius:10px"><span style="font-size:20px">🌸</span><span style="font-size:13px;font-weight:600;color:var(--primary-600)">Lenor 50% oferta exclusiva</span></div>
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--neutrals-100);border-radius:10px"><span style="font-size:20px">⭐</span><span style="font-size:13px;font-weight:600;color:var(--primary-600)">+100 Puntos</span></div>
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--neutrals-100);border-radius:10px"><span style="font-size:20px">🪥</span><span style="font-size:13px;font-weight:600;color:var(--primary-600)">Oral-B ProExpert 2x1</span></div>
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:linear-gradient(135deg,#FFF8E1,#FFECB3);border-radius:10px"><span style="font-size:20px">💎</span><span style="font-size:13px;font-weight:700;color:#FF6F00">Cupón 5€ exclusivo (raro)</span></div>
           </div>
         </div>
       </div>
@@ -581,12 +581,12 @@ function launchFS(){const s=document.getElementById('fsSplash');const el=documen
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').then(r=>{r.update()}).catch(()=>{})}
 // Spin the Wheel
 const wheelPrizes=[
-  {label:'+25 Pts',icon:'⭐',color:'#5EBC82',desc:'Has ganado 25 puntos extra'},
-  {label:'+50 Pts',icon:'🌟',color:'#2A43D8',desc:'Has ganado 50 puntos extra'},
-  {label:'+1€',icon:'💰',color:'#48AD6F',desc:'1€ añadido a tu cartera'},
-  {label:'Sorpresa',icon:'🎁',color:'#FF552A',desc:'Un regalo misterioso te espera'},
-  {label:'+100 Pts',icon:'💎',color:'#FF6F00',desc:'¡Increíble! 100 puntos para ti'},
-  {label:'Tirada',icon:'🔄',color:'#7C4DFF',desc:'¡Otra oportunidad mañana!'}
+  {label:'Fairy gratis',icon:'🧴',color:'#48AD6F',desc:'¡Fairy Original gratis en tu próxima compra!'},
+  {label:'Cupón 3€',icon:'💰',color:'#2A43D8',desc:'3€ de descuento en tu próxima compra'},
+  {label:'Lenor 50%',icon:'🌸',color:'#9C27B0',desc:'Oferta exclusiva: Lenor al 50%'},
+  {label:'+100 Pts',icon:'⭐',color:'#FF6F00',desc:'¡100 puntos extra para tu nivel!'},
+  {label:'Oral-B 2x1',icon:'🪥',color:'#5EBC82',desc:'2x1 en Oral-B ProExpert'},
+  {label:'Cupón 5€',icon:'💎',color:'#FF552A',desc:'¡Increíble! 5€ de descuento exclusivo'}
 ];
 let wheelSpinning=false;
 function drawWheel(){
