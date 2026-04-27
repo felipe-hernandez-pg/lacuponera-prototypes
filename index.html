@@ -106,16 +106,6 @@ body{font-family:'Montserrat',system-ui,-apple-system,sans-serif;background:#000
 .r-chip img{width:28px;height:28px;border-radius:14px;object-fit:contain;background:#fff}
 .r-chip span{font-size:12px;font-weight:600;color:var(--primary-600)}
 /* Processing */
-/* Spin the Wheel */
-.wheel-wrap{position:relative;width:280px;height:280px;margin:0 auto}
-.wheel-outer{width:280px;height:280px;border-radius:50%;padding:8px;background:conic-gradient(from 0deg,var(--brand-01),var(--brand-02),var(--secondary-01),var(--brand-01));box-shadow:0 8px 32px rgba(0,0,0,.18)}
-.wheel-canvas{width:264px;height:264px;border-radius:50%;transition:transform 4s cubic-bezier(.17,.67,.12,.99)}
-.wheel-pointer{position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:14px solid transparent;border-right:14px solid transparent;border-top:28px solid var(--primary-600);z-index:5;filter:drop-shadow(0 2px 4px rgba(0,0,0,.3))}
-.wheel-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.15);display:flex;align-items:center;justify-content:center;font-size:24px;z-index:4}
-.wheel-prize-overlay{position:absolute;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:10;opacity:0;visibility:hidden;transition:all .3s}
-.wheel-prize-overlay.show{opacity:1;visibility:visible}
-.wheel-prize-card{background:#fff;border-radius:24px;padding:32px 24px;text-align:center;max-width:280px;width:90%;transform:scale(.8);transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
-.wheel-prize-overlay.show .wheel-prize-card{transform:scale(1)}
 .proc-spin{width:60px;height:60px;border:4px solid var(--neutrals-200);border-top-color:var(--brand-01);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 16px}
 @keyframes spin{to{transform:rotate(360deg)}}
 /* Success check */
@@ -180,14 +170,6 @@ body{font-family:'Montserrat',system-ui,-apple-system,sans-serif;background:#000
           <div style="width:40px;height:40px;border-radius:20px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:20px">⭐</div>
           <div style="flex:1"><div style="font-size:14px;font-weight:700;color:var(--primary-600)">247 puntos</div><div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">Te faltan 153 para nivel Oro</div></div>
           <div style="font-size:16px;color:var(--neutrals-400)">›</div>
-        </div>
-
-        <!-- 🎡 Spin the Wheel Banner -->
-        <div onclick="go('spin')" style="margin:0 16px 12px;padding:16px;background:linear-gradient(135deg,#FFF8E1,#FFECB3);border:1.5px solid #FFD54F;border-radius:14px;cursor:pointer;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden">
-          <div style="position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:rgba(255,193,7,.15);border-radius:50%"></div>
-          <div style="width:44px;height:44px;border-radius:22px;background:linear-gradient(135deg,#FF6F00,#FFC107);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">🎡</div>
-          <div style="flex:1;position:relative;z-index:1"><div style="font-size:14px;font-weight:700;color:var(--primary-600)">¡Gira la Ruleta!</div><div style="font-size:11px;color:var(--neutrals-500);margin-top:2px">Tienes 1 tirada gratis hoy</div></div>
-          <div style="background:linear-gradient(90deg,#FF6F00,#FFC107);color:#fff;font-size:11px;font-weight:700;padding:6px 14px;border-radius:100px;white-space:nowrap">Girar</div>
         </div>
 
         <!-- MGM Banner -->
@@ -286,7 +268,7 @@ body{font-family:'Montserrat',system-ui,-apple-system,sans-serif;background:#000
         </div>
         <div style="padding:0 16px 12px"><button class="grad-btn" onclick="go('history')">Ver historial de puntos</button></div>
         <div style="padding:0 16px 20px"><button class="sec-btn" onclick="levelUp()">✨ Simular Level Up ✨</button></div>
-        <div style="text-align:center;padding:4px 0 8px;font-size:9px;color:var(--neutrals-300)">v5.0</div>
+        <div style="text-align:center;padding:4px 0 8px;font-size:9px;color:var(--neutrals-300)">v4.7</div>
       </div>
       <nav class="tab-bar"><div class="tab-item" onclick="root()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/></svg><span>Inicio</span></div><div class="tab-item" onclick="go('wallet')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8h20"/><circle cx="17" cy="14" r="2"/></svg><span>Cartera</span></div><div class="tab-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3"/></svg><span>Escanear</span></div><div class="tab-item" onclick="go('rewards')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.27 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg><span>Premios</span></div><div class="tab-item on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Perfil</span></div></nav>
     </div>
@@ -360,61 +342,6 @@ body{font-family:'Montserrat',system-ui,-apple-system,sans-serif;background:#000
         </div>
       </div>
       <nav class="tab-bar"><div class="tab-item" onclick="root()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/></svg><span>Inicio</span></div><div class="tab-item" onclick="go('wallet')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8h20"/><circle cx="17" cy="14" r="2"/></svg><span>Cartera</span></div><div class="tab-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3"/></svg><span>Escanear</span></div><div class="tab-item on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.27 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg><span>Premios</span></div><div class="tab-item" onclick="go('nivel')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Perfil</span></div></nav>
-    </div>
-
-    <!-- ===== SPIN THE WHEEL ===== -->
-    <div class="screen" id="s-spin">
-      <div class="scroll">
-        <div class="inner-header"><div class="back-btn" onclick="back()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#122B1C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12,19 5,12 12,5"/></svg></div><div class="page-title">Ruleta de Premios</div></div>
-
-        <!-- Daily spin info -->
-        <div style="text-align:center;padding:0 16px 16px">
-          <div style="font-size:48px;margin-bottom:8px">🎡</div>
-          <div style="font-size:18px;font-weight:800;color:var(--primary-600)">¡Tu tirada diaria!</div>
-          <div style="font-size:13px;color:var(--neutrals-500);margin-top:4px">Gira la ruleta y gana premios exclusivos</div>
-          <div style="display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:6px 14px;border-radius:100px;background:var(--primary-100)">
-            <span style="font-size:12px;font-weight:700;color:var(--primary-600)">🎟️ 1 tirada disponible</span>
-          </div>
-        </div>
-
-        <!-- The Wheel -->
-        <div class="wheel-wrap" id="wheelWrap">
-          <div class="wheel-pointer"></div>
-          <div class="wheel-outer">
-            <canvas class="wheel-canvas" id="wheelCanvas" width="528" height="528"></canvas>
-          </div>
-          <div class="wheel-center">🎁</div>
-          <!-- Prize overlay -->
-          <div class="wheel-prize-overlay" id="prizeOverlay">
-            <div class="wheel-prize-card">
-              <div style="font-size:48px;margin-bottom:12px" id="prizeIcon">🎉</div>
-              <div style="font-size:20px;font-weight:800;color:var(--primary-600)" id="prizeTitle">¡Enhorabuena!</div>
-              <div style="font-size:14px;color:var(--neutrals-500);margin-top:8px" id="prizeDesc"></div>
-              <button class="grad-btn" style="margin-top:20px" onclick="closePrize()">¡Genial!</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Spin Button -->
-        <div style="padding:20px 16px 8px">
-          <button class="grad-btn" id="spinBtn" onclick="spinWheel()" style="background:linear-gradient(90deg,#FF6F00,#FFC107);box-shadow:0 6px 12px rgba(255,111,0,.25)">
-            🎡 ¡Girar la Ruleta!
-          </button>
-        </div>
-
-        <!-- Prizes list -->
-        <div style="padding:16px">
-          <div style="font-size:14px;font-weight:700;color:var(--primary-600);margin-bottom:12px">Premios posibles</div>
-          <div style="display:flex;flex-direction:column;gap:8px">
-            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--neutrals-100);border-radius:10px"><span style="font-size:20px">⭐</span><span style="font-size:13px;font-weight:600;color:var(--primary-600)">+25 Puntos</span></div>
-            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--neutrals-100);border-radius:10px"><span style="font-size:20px">🌟</span><span style="font-size:13px;font-weight:600;color:var(--primary-600)">+50 Puntos</span></div>
-            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--neutrals-100);border-radius:10px"><span style="font-size:20px">💰</span><span style="font-size:13px;font-weight:600;color:var(--primary-600)">+1€ Cashback</span></div>
-            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--neutrals-100);border-radius:10px"><span style="font-size:20px">🎁</span><span style="font-size:13px;font-weight:600;color:var(--primary-600)">Premio sorpresa</span></div>
-            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:linear-gradient(135deg,#FFF8E1,#FFECB3);border-radius:10px"><span style="font-size:20px">💎</span><span style="font-size:13px;font-weight:700;color:#FF6F00">+100 Puntos (raro)</span></div>
-            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--neutrals-100);border-radius:10px"><span style="font-size:20px">🔄</span><span style="font-size:13px;font-weight:600;color:var(--primary-600)">Tirada extra</span></div>
-          </div>
-        </div>
-      </div>
     </div>
 
     <!-- ===== MGM / INVITE ===== -->
@@ -579,62 +506,6 @@ function uT(){const n=new Date();document.getElementById('sTime').textContent=n.
 function launchFS(){const s=document.getElementById('fsSplash');const el=document.documentElement;if(el.requestFullscreen)el.requestFullscreen().catch(()=>{});else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();s.classList.add('hidden');setTimeout(()=>s.style.display='none',500)}
 // Service Worker — network-first, no cache
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').then(r=>{r.update()}).catch(()=>{})}
-// Spin the Wheel
-const wheelPrizes=[
-  {label:'+25 Pts',icon:'⭐',color:'#5EBC82',desc:'Has ganado 25 puntos extra'},
-  {label:'+50 Pts',icon:'🌟',color:'#2A43D8',desc:'Has ganado 50 puntos extra'},
-  {label:'+1€',icon:'💰',color:'#48AD6F',desc:'1€ añadido a tu cartera'},
-  {label:'Sorpresa',icon:'🎁',color:'#FF552A',desc:'Un regalo misterioso te espera'},
-  {label:'+100 Pts',icon:'💎',color:'#FF6F00',desc:'¡Increíble! 100 puntos para ti'},
-  {label:'Tirada',icon:'🔄',color:'#7C4DFF',desc:'¡Otra oportunidad mañana!'}
-];
-let wheelSpinning=false;
-function drawWheel(){
-  const cv=document.getElementById('wheelCanvas');if(!cv)return;
-  const ctx=cv.getContext('2d'),n=wheelPrizes.length,arc=2*Math.PI/n,r=264;
-  ctx.clearRect(0,0,528,528);
-  wheelPrizes.forEach((p,i)=>{
-    const a=arc*i-Math.PI/2;
-    ctx.beginPath();ctx.moveTo(264,264);ctx.arc(264,264,264,a,a+arc);ctx.closePath();
-    ctx.fillStyle=i%2===0?'#fff':'#F5F5F5';ctx.fill();
-    ctx.strokeStyle='#E0E0E0';ctx.lineWidth=1;ctx.stroke();
-    ctx.save();ctx.translate(264,264);ctx.rotate(a+arc/2);
-    ctx.fillStyle=p.color;ctx.font='bold 28px sans-serif';ctx.textAlign='center';
-    ctx.fillText(p.icon,180,4);
-    ctx.fillStyle='#333';ctx.font='bold 16px Montserrat,sans-serif';
-    ctx.fillText(p.label,130,6);
-    ctx.restore();
-  });
-}
-function spinWheel(){
-  if(wheelSpinning)return;wheelSpinning=true;
-  const cv=document.getElementById('wheelCanvas'),btn=document.getElementById('spinBtn');
-  btn.style.opacity='.5';btn.textContent='Girando...';
-  const winner=Math.floor(Math.random()*wheelPrizes.length);
-  const arc=360/wheelPrizes.length;
-  const targetAngle=360*6+(360-arc*winner-arc/2);
-  cv.style.transition='none';cv.style.transform='rotate(0deg)';
-  void cv.offsetHeight;
-  cv.style.transition='transform 4s cubic-bezier(.17,.67,.12,.99)';
-  cv.style.transform='rotate('+targetAngle+'deg)';
-  setTimeout(()=>{
-    const p=wheelPrizes[winner];
-    document.getElementById('prizeIcon').textContent=p.icon;
-    document.getElementById('prizeTitle').textContent='¡'+p.label+'!';
-    document.getElementById('prizeDesc').textContent=p.desc;
-    document.getElementById('prizeOverlay').classList.add('show');
-    confetti();if(navigator.vibrate)navigator.vibrate([100,50,200]);
-  },4200);
-}
-function closePrize(){
-  document.getElementById('prizeOverlay').classList.remove('show');
-  const cv=document.getElementById('wheelCanvas'),btn=document.getElementById('spinBtn');
-  cv.style.transition='none';cv.style.transform='rotate(0deg)';
-  btn.style.opacity='1';btn.textContent='🎡 ¡Girar la Ruleta!';wheelSpinning=false;
-}
-// Init wheel on first navigate
-const origGo=go;
-go=function(id){origGo(id);if(id==='spin')setTimeout(drawWheel,50);};
 </script>
 </body>
 </html>
