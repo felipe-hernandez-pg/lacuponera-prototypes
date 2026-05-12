@@ -112,6 +112,21 @@ body{font-family:'Montserrat',sans-serif;background:#f5f5f5;display:flex;justify
 .submit-btn:active{transform:scale(.98)}
 .back-to-options{font-size:13px;color:var(--brand-02);font-weight:600;cursor:pointer;text-align:center;margin-top:8px}
 
+/* Progressive profiling overlay */
+.profile-overlay{position:absolute;inset:0;background:#fff;display:flex;flex-direction:column;align-items:center;z-index:99;opacity:0;visibility:hidden;transition:all .3s;overflow-y:auto;padding:60px 24px 40px}
+.profile-overlay.show{opacity:1;visibility:visible}
+.profile-provider{display:flex;align-items:center;gap:8px;background:var(--neutrals-100);border-radius:10px;padding:10px 16px;font-size:13px;font-weight:600;color:var(--neutrals-600);margin-bottom:12px}
+.profile-provider .prov-icon{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px}
+.prefilled-field{display:flex;flex-direction:column;gap:4px}
+.prefilled-field label{font-size:12px;font-weight:600;color:var(--neutrals-600);text-transform:uppercase;letter-spacing:.3px}
+.prefilled-field .prefilled-input{height:48px;border:1.5px solid var(--neutrals-200);border-radius:10px;padding:0 14px;font-family:'Montserrat',sans-serif;font-size:14px;color:var(--neutrals-500);background:var(--neutrals-100);display:flex;align-items:center;position:relative}
+.prefilled-field .prefilled-input .lock{position:absolute;right:12px;color:var(--neutrals-300);font-size:16px}
+.profile-divider{display:flex;align-items:center;gap:12px;width:100%;margin:8px 0}
+.profile-divider .divider-line{flex:1;height:1px;background:var(--neutrals-200)}
+.profile-divider span{font-size:11px;font-weight:700;color:var(--brand-01);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+.profile-note{font-size:12px;color:var(--neutrals-500);text-align:center;line-height:1.5;margin-bottom:8px;max-width:300px}
+.profile-note strong{color:var(--primary-600)}
+
 /* Success overlay */
 .success-overlay{position:absolute;inset:0;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:100;opacity:0;visibility:hidden;transition:all .3s}
 .success-overlay.show{opacity:1;visibility:visible}
@@ -170,16 +185,24 @@ body{font-family:'Montserrat',sans-serif;background:#f5f5f5;display:flex;justify
       <!-- Email form (hidden) -->
       <div class="email-form" id="emailForm">
         <div class="form-field">
-          <label>Email</label>
+          <label>Nombre</label>
+          <input type="text" placeholder="Tu nombre" id="inputNombre">
+        </div>
+        <div class="form-field">
+          <label>Apellido</label>
+          <input type="text" placeholder="Tu apellido" id="inputApellido">
+        </div>
+        <div class="form-field">
+          <label>Código Postal</label>
+          <input type="text" placeholder="Ej: 28001" id="inputCP" maxlength="5" inputmode="numeric">
+        </div>
+        <div class="form-field">
+          <label>Correo Electrónico</label>
           <input type="email" placeholder="tu@email.com" id="inputEmail">
         </div>
         <div class="form-field">
           <label>Contraseña</label>
           <input type="password" placeholder="Mínimo 8 caracteres" id="inputPass">
-        </div>
-        <div class="form-field">
-          <label>Confirmar contraseña</label>
-          <input type="password" placeholder="Repite tu contraseña" id="inputPass2">
         </div>
         <button class="submit-btn" onclick="submitEmail()">Crear cuenta</button>
         <div class="back-to-options" onclick="hideEmailForm()">← Volver a opciones de registro</div>
@@ -190,6 +213,70 @@ body{font-family:'Montserrat',sans-serif;background:#f5f5f5;display:flex;justify
     <div class="footer">
       <div class="footer-text">Al registrarte, aceptas nuestros<br><a href="#">Términos y Condiciones</a> y <a href="#">Política de Privacidad</a></div>
       <div class="login-link">¿Ya tienes cuenta? <a href="#">Inicia sesión</a></div>
+    </div>
+
+    <!-- Progressive Profiling overlay (after social login) -->
+    <div class="profile-overlay" id="profileOverlay">
+      <div class="logo-area" style="margin-top:0">
+        <div class="logo-icon" style="width:60px;height:60px;font-size:28px;border-radius:14px">🛒</div>
+        <div class="logo-text" style="font-size:22px">¡Casi listo!</div>
+        <div class="logo-sub" style="margin-top:4px">Completa tu perfil para empezar</div>
+      </div>
+
+      <div class="profile-provider" id="providerBadge">
+        <div class="prov-icon"></div>
+        <span id="providerName">Conectado con —</span>
+      </div>
+
+      <div class="profile-note">Tu <strong>nombre</strong> y <strong>email</strong> se obtuvieron de tu cuenta social. Necesitamos algunos datos adicionales.</div>
+
+      <div class="email-form show" style="margin-top:8px">
+        <!-- Pre-filled from social provider (read-only) -->
+        <div class="prefilled-field">
+          <label>Nombre</label>
+          <div class="prefilled-input"><span id="prefilledName">María García</span><span class="lock">🔒</span></div>
+        </div>
+        <div class="prefilled-field">
+          <label>Correo Electrónico</label>
+          <div class="prefilled-input"><span id="prefilledEmail">maria.garcia@gmail.com</span><span class="lock">🔒</span></div>
+        </div>
+
+        <div class="profile-divider">
+          <div class="divider-line"></div>
+          <span>Datos adicionales</span>
+          <div class="divider-line"></div>
+        </div>
+
+        <!-- Fields user must complete -->
+        <div class="form-field">
+          <label>Código Postal</label>
+          <input type="text" placeholder="Ej: 28001" id="profileCP" maxlength="5" inputmode="numeric">
+        </div>
+        <div class="form-field">
+          <label>Fecha de nacimiento</label>
+          <input type="date" id="profileDOB">
+        </div>
+        <div class="form-field">
+          <label>Género</label>
+          <select id="profileGender" style="height:48px;border:1.5px solid var(--neutrals-200);border-radius:10px;padding:0 14px;font-family:'Montserrat',sans-serif;font-size:14px;color:var(--primary-600);outline:none;background:#fff">
+            <option value="" disabled selected>Seleccionar</option>
+            <option>Femenino</option>
+            <option>Masculino</option>
+            <option>Otro</option>
+            <option>Prefiero no decirlo</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Contraseña</label>
+          <input type="password" placeholder="Para acceder también vía email" id="profilePass">
+        </div>
+        <div class="form-field">
+          <label>Verificar Contraseña</label>
+          <input type="password" placeholder="Repite tu contraseña" id="profilePass2">
+        </div>
+        <button class="submit-btn" onclick="submitProfile()">Completar registro</button>
+        <div class="back-to-options" onclick="hideProfile()">← Volver a opciones de registro</div>
+      </div>
     </div>
 
     <!-- Success overlay -->
@@ -205,6 +292,36 @@ body{font-family:'Montserrat',sans-serif;background:#f5f5f5;display:flex;justify
 
 <script>
 function socialLogin(provider){
+  // Show progressive profiling instead of success
+  const badge = document.getElementById('providerBadge');
+  const provName = document.getElementById('providerName');
+  if(provider === 'Facebook'){
+    badge.style.background='#EBF0FF';
+    badge.querySelector('.prov-icon').innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073c0 6.025 4.388 11.02 10.125 11.927v-8.437H7.078v-3.49h3.047V9.41c0-3.026 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.971H15.83c-1.491 0-1.956.93-1.956 1.886v2.267h3.328l-.532 3.49h-2.796v8.437C19.612 23.093 24 18.098 24 12.073z"/></svg>';
+    provName.textContent = 'Conectado con Facebook';
+    document.getElementById('prefilledName').textContent = 'María García López';
+    document.getElementById('prefilledEmail').textContent = 'maria.garcia@facebook.com';
+  } else {
+    badge.style.background='#F0F4FF';
+    badge.querySelector('.prov-icon').innerHTML='<svg width="16" height="16" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09A6.97 6.97 0 015.46 12c0-.72.13-1.43.37-2.09V7.07H2.18A11.96 11.96 0 001 12c0 1.94.46 3.77 1.18 5.07l3.66-2.98z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>';
+    provName.textContent = 'Conectado con Google';
+    document.getElementById('prefilledName').textContent = 'María García';
+    document.getElementById('prefilledEmail').textContent = 'maria.garcia@gmail.com';
+  }
+  document.getElementById('profileOverlay').classList.add('show');
+  if(navigator.vibrate)navigator.vibrate(50);
+}
+
+function hideProfile(){
+  document.getElementById('profileOverlay').classList.remove('show');
+}
+
+function submitProfile(){
+  const cp = document.getElementById('profileCP').value;
+  const p = document.getElementById('profilePass').value;
+  const p2 = document.getElementById('profilePass2').value;
+  if(!cp||!p){alert('Por favor completa los campos obligatorios');return}
+  if(p!==p2){alert('Las contraseñas no coinciden');return}
   document.getElementById('successOverlay').classList.add('show');
   if(navigator.vibrate)navigator.vibrate([100,50,100]);
 }
@@ -224,11 +341,11 @@ function hideEmailForm(){
 }
 
 function submitEmail(){
+  const n=document.getElementById('inputNombre').value;
+  const a=document.getElementById('inputApellido').value;
   const e=document.getElementById('inputEmail').value;
   const p=document.getElementById('inputPass').value;
-  const p2=document.getElementById('inputPass2').value;
-  if(!e||!p){alert('Por favor completa todos los campos');return}
-  if(p!==p2){alert('Las contraseñas no coinciden');return}
+  if(!n||!a||!e||!p){alert('Por favor completa todos los campos');return}
   document.getElementById('successOverlay').classList.add('show');
   if(navigator.vibrate)navigator.vibrate([100,50,100]);
 }
